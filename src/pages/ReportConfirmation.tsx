@@ -146,7 +146,7 @@ const ReportConfirmation: React.FC = () => {
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
                   <h3 className="font-semibold text-amber-800 mb-2">Potential Legal Violation Detected</h3>
                   <p className="text-amber-700">
-                    Based on our analysis, there is a high probability (>80%) that your situation 
+                    Based on our analysis, there is a high probability (&gt;80%) that your situation 
                     may involve a legal violation of your workplace rights.
                   </p>
                 </div>

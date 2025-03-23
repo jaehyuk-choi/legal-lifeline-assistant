@@ -59,6 +59,11 @@ const ReportIssue: React.FC = () => {
       description: 'Being unfairly denied benefits you are entitled to, such as healthcare or paid leave.'
     },
     {
+      id: 'immigration-threat',
+      title: 'Immigration Status Threats',
+      description: 'Employer threatening to report immigration status as leverage or retaliation.'
+    },
+    {
       id: 'other',
       title: 'Other Issues',
       description: 'Any other workplace violations not listed above.'

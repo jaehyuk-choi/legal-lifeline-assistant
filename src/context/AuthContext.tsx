@@ -57,14 +57,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) throw error;
       toast({
-        title: "계정이 성공적으로 생성되었습니다",
-        description: "이메일을 확인해주세요. 이메일 확인 링크를 클릭하여 가입을 완료해주세요.",
+        title: "Account created successfully",
+        description: "Please check your email for a confirmation link to complete your registration.",
       });
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "계정 생성 오류",
-        description: error.message || "예상치 못한 오류가 발생했습니다",
+        title: "Account creation error",
+        description: error.message || "An unexpected error occurred",
       });
       throw error;
     } finally {
@@ -82,20 +82,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         if (error.message === "Email not confirmed") {
-          throw new Error("이메일 인증이 완료되지 않았습니다. 이메일함을 확인하거나 관리자에게 문의하세요.");
+          throw new Error("Your email has not been confirmed. Please check your inbox or contact support.");
         }
         throw error;
       }
       
       toast({
-        title: "로그인 성공",
-        description: "Fairvio에 오신 것을 환영합니다!",
+        title: "Login successful",
+        description: "Welcome to Fairvio!",
       });
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "인증 실패",
-        description: error.message || "이메일과 비밀번호를 확인해주세요",
+        title: "Authentication failed",
+        description: error.message || "Please check your email and password",
       });
       throw error;
     } finally {
@@ -109,14 +109,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       toast({
-        title: "로그아웃 성공",
-        description: "로그아웃되었습니다",
+        title: "Logout successful",
+        description: "You have been logged out",
       });
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "로그아웃 오류",
-        description: error.message || "예상치 못한 오류가 발생했습니다",
+        title: "Logout error",
+        description: error.message || "An unexpected error occurred",
       });
     } finally {
       setLoading(false);
