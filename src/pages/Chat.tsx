@@ -4,18 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import BackgroundGradient from '@/components/BackgroundGradient';
 import ChatMessage from '@/components/ChatMessage';
 import LanguageSelector from '@/components/LanguageSelector';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
   DialogClose
 } from '@/components/ui/dialog';
@@ -71,13 +70,27 @@ const Chat: React.FC = () => {
     setIsLoading(true);
     
     try {
-      // This would be replaced with your actual API call to the RAG system
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Mock response - in production this would come from your backend
+      // Format conversation history for the API
+      const conversationHistory = messages.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }));
+
+      // Call our Supabase Edge Function that connects to your Python LLM API
+      const { data, error } = await supabase.functions.invoke('chat-llm', {
+        body: {
+          message: input,
+          conversationHistory: conversationHistory
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
+
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: 'This is a demo version. In production, this would call the backend API to get a response from the RAG model.',
+        content: data.response || "I'm sorry, I couldn't generate a response at this time.",
         role: 'assistant',
         timestamp: new Date(),
       };
@@ -99,8 +112,20 @@ const Chat: React.FC = () => {
     setIsLoading(true);
     
     try {
-      // This would be replaced with your actual API call to /initiate_call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Call your Flask backend to initiate a call
+      const response = await fetch('http://localhost:5000/initiate_call', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          timestamp: new Date().toISOString(),
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to initiate call');
+      }
       
       toast({
         title: "Call connecting",
@@ -122,14 +147,27 @@ const Chat: React.FC = () => {
     setIsSummarizing(true);
     
     try {
-      // Mock API call to generate a summary
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Format conversation for the API
+      const conversationHistory = messages.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }));
+
+      // Call edge function to get a summary
+      const { data, error } = await supabase.functions.invoke('chat-llm', {
+        body: {
+          message: "Please summarize our conversation",
+          conversationHistory: conversationHistory,
+          isSummaryRequest: true
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
       
-      // In production, this would be a real summary from your backend
       setConversationSummary(
-        "Based on our conversation, it appears you've experienced a potential wage theft issue at your workplace. " +
-        "You mentioned working overtime without receiving proper compensation for several weeks. " +
-        "This may constitute a violation of labor laws regarding overtime pay requirements."
+        data.summary || "Based on our conversation, we discussed some workplace issues that may require further attention."
       );
       
       setShowSummaryDialog(true);
@@ -146,8 +184,18 @@ const Chat: React.FC = () => {
   };
 
   const handleCreateReport = () => {
-    // In a real implementation, save the conversation data to use in the report
+    // Store conversation data in sessionStorage to use in the report
+    sessionStorage.setItem('conversationSummary', conversationSummary);
+    sessionStorage.setItem('conversationMessages', JSON.stringify(messages));
     navigate('/report-confirmation');
+  };
+
+  const handleBackButton = () => {
+    if (messages.length > 1) {
+      setShowSummaryDialog(true);
+    } else {
+      navigate(-1);
+    }
   };
 
   return (
@@ -161,7 +209,7 @@ const Chat: React.FC = () => {
             <Button 
               variant="ghost" 
               size="icon" 
-              onClick={() => navigate(-1)}
+              onClick={handleBackButton}
               className="h-8 w-8"
             >
               <ArrowLeft className="h-4 w-4" />

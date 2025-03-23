@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/context/LanguageContext';
+import { supabase } from '@/integrations/supabase/client';
 
 interface CallToActionProps {
   className?: string;
@@ -19,14 +20,24 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
     setIsLoading(true);
     
     try {
-      // This would be replaced with your actual API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Call our edge function that connects to the Flask backend
+      const { data, error } = await supabase.functions.invoke('initiate-call', {
+        body: {
+          source: 'call-to-action',
+          timestamp: new Date().toISOString(),
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
       
       toast({
         title: "Call initiated",
         description: "You will receive a call shortly to the registered number.",
       });
     } catch (error) {
+      console.error('Error initiating call:', error);
       toast({
         title: "Error",
         description: "There was a problem initiating your call. Please try again.",
