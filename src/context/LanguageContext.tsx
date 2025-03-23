@@ -149,7 +149,7 @@ const translations: Translations = {
     fr: 'Ce rapport n\'est pas un avis juridique, mais la première étape pour comprendre votre situation. La conversation ultérieure sera menée par chat ou consultation téléphonique.',
     zh: '此报告不是法律建议，而是了解您情况的第一步。进一步的对话将通过聊天或电话咨询进行。',
     ko: '이 보고서는 법률 조언이 아니라 귀하의 상황을 이해하는 첫 번째 단계입니다. 추가 대화는 채팅이나 전화 상담을 통해 진행됩니다.',
-    hi: 'यह रिपोर्ट कानूनी सलाह नहीं है, बल्कि आपकी स्थिति को समझने का पहला कदम है। आगे की बातचीत चैट या फोन परामर्श के माध्यम से की जाएगी।',
+    hi: 'यह रिपोर्ट कानूनी सलाह नहीं है, बल्कि आपकी स्थिति को समझने का पहला कदम है। अगले चरण में, हम आपसे अधिक विवरण पूछेंगे।',
   },
   'reportIssue.anonymous': {
     en: 'Make this report anonymous',
@@ -270,7 +270,7 @@ const translations: Translations = {
     es: 'Suba fotos, documentos u otras pruebas relacionadas con este incidente',
     fr: 'Téléchargez des photos, des documents ou d\'autres preuves liées à cet incident',
     zh: '上传与此事件相关的照片、文件或其他证据',
-    ko: '이 사건과 관련된 사진, 문서 또는 기타 증거를 업로드하세요',
+    ko: '이 사건과 관련된 사진、文档 또는 기타 증거를 업로드하세요',
     hi: 'इस घटना से संबंधित फोटो, दस्तावेज़, या अन्य सबूत अपलोड करें',
   },
   'reportDetails.selectedFiles': {
@@ -458,7 +458,7 @@ const translations: Translations = {
     es: 'Reciba información clara sobre sus derechos y orientación práctica sobre los próximos pasos a seguir.',
     fr: 'Recevez des informations claires sur vos droits et des conseils pratiques sur les prochaines étapes à suivre.',
     zh: '获取关于您权利的清晰信息以及关于下一步行动的实用指导。',
-    ko: '귀하의 권리에 대한 명확한 정보와 다음 단계에 대한 실용적인 지침을 받으세요.',
+    ko: '귀하의 권리에 대한 명확한 정보와 다음 단계에 대한 실用的な 지침을 받으세요.',
     hi: 'अपने अधिकारों के बारे में स्पष्ट जानकारी और अगले कदमों पर व्यावहारिक मार्गदर्शन प्राप्त करें।',
   },
   'step4.title': {
@@ -541,7 +541,7 @@ const translations: Translations = {
     es: 'Sí, nuestro servicio de asistencia legal es completamente gratuito. Está diseñado para ayudar a los trabajadores inmigrantes a comprender sus derechos y navegar por las violaciones de las leyes laborales sin ninguna carga financiera.',
     fr: 'Oui, notre service d\'assistance juridique est entièrement gratuit. Il est conçu pour aider les travailleurs immigrés à comprendre leurs droits et à naviguer dans les violations du droit du travail sans aucune charge financière.',
     zh: '是的，我们的法律援助服务完全免费使用。它旨在帮助移民工人了解他们的权利并应对劳动法违规，而不会带来任何经济负担。',
-    ko: '네, 저희 법률 지원 서비스는 완전히 무료로 이용하실 수 있습니다. 이는 이민 노동자들이 경제적 부담 없이 자신의 권리를 이해하고 노동법 위반 사항을 처리할 수 있도록 설계되었습니다.',
+    ko: '네, 저희 법률 지원 서비스는 완전히 무료로 이용하실 수 있습니다. 이는 이민 노동자들이 경제적 부담 없이 자신의 권리와 혜택을 이해하고 노동법 위반 사항을 처리할 수 있도록 설계되었습니다.',
     hi: 'हां, हमारी कानूनी सहायता सेवा पूरी तरह से मुफ्त है। यह प्रवासी श्रमिकों को बिना किसी वित्तीय बोझ के अपने अधिकारों को समझने और श्रम कानून उल्लंघनों का सामना करने में मदद करने के लिए डिज़ाइन की गई है।',
   },
   'faq.q2': {
@@ -574,7 +574,7 @@ const translations: Translations = {
     fr: 'Absolument. Nous prenons votre vie privée très au sérieux. Toutes les conversations sont confidentielles, et les informations personnelles ne sont jamais partagées avec des tiers sans votre consentement explicite.',
     zh: '当然。我们非常重视您的隐私。所有对话都是保密的，未经您的明确同意，个人信息绝不会与第三方共享。',
     ko: '물론입니다. 저희는 귀하의 개인 정보를 매우 중요하게 생각합니다. 모든 대화는 기밀이며, 귀하의 명시적 동의 없이는 개인 정보가 제3자와 공유되지 않습니다.',
-    hi: 'बिल्कुल। हम आपकी गोपनीयता को बहुत गंभीरता से लेते हैं। सभी बातचीत गोपनीय हैं, और व्यक्तिगत जानकारी आपकी स्पष्ट सहमति के बिना कभी भी तीसरे पक्ष के साथ साझा नहीं की जाती है।',
+    hi: 'बिल्कुल। हम आपकी गोपनीयता को बहुत ���ंभीरता से लेते हैं। सभी बातचीत गोपनीय हैं, और व्यक्तिगत जानकारी आपकी स्पष्ट सहमति के बिना कभी भी तीसरे पक्ष के साथ साझा नहीं की जाती है।',
   },
   'faq.q4': {
     en: 'What types of labor issues can this help with?',
@@ -605,4 +605,59 @@ const translations: Translations = {
     es: 'No, nuestro servicio está disponible para todos los trabajadores independientemente de su estado migratorio. No preguntamos ni requerimos ninguna documentación para brindar asistencia.',
     fr: 'Non, notre service est disponible pour tous les travailleurs, quel que soit leur statut d\'immigration. Nous ne demandons ni n\'exigeons aucune documentation pour fournir une assistance.',
     zh: '不，我们的服务适用于所有工人，无论其移民身份如何。我们不会询问或要求任何文件来提供帮助。',
-    ko: '아니요, 저희 서비스는 이민 신분과 관계없이 모든 근로자가 이용
+    ko: '아니요, 저희 서비스는 이민 신분과 관계없이 모든 근로자가 이용할 수 있습니다. 저희는 도움을 제공하기 위해 어떤 서류도 요구하거나 필요로 하지 않습니다.',
+    hi: 'नहीं, हमारी सेवा आप्रवासन स्थिति की परवाह किए बिना सभी कार्यकर्ताओं के लिए उपलब्ध है। हम सहायता प्रदान करने के लिए किसी भी दस्तावेज़ के बारे में पूछते या आवश्यक नहीं करते हैं।',
+  },
+};
+
+// Define context interface
+interface LanguageContextType {
+  language: LanguageCode;
+  setLanguage: (language: LanguageCode) => void;
+  t: (key: string) => string;
+}
+
+// Create context
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+// Provider component
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguage] = useState<LanguageCode>('en');
+
+  // Load saved language preference on mount
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('preferredLanguage') as LanguageCode;
+    if (savedLanguage && Object.keys(translations['hero.title']).includes(savedLanguage)) {
+      setLanguage(savedLanguage);
+    }
+  }, []);
+
+  // Save language preference when it changes
+  useEffect(() => {
+    localStorage.setItem('preferredLanguage', language);
+  }, [language]);
+
+  // Translation function
+  const t = (key: string): string => {
+    if (!translations[key]) {
+      console.warn(`Translation key not found: ${key}`);
+      return key;
+    }
+    return translations[key][language] || translations[key]['en'] || key;
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+// Custom hook for using the language context
+export const useLanguage = (): LanguageContextType => {
+  const context = useContext(LanguageContext);
+  if (context === undefined) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+};
