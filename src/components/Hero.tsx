@@ -1,9 +1,8 @@
 
 import React from 'react';
-import { ArrowRight, Phone, MessageCircle, FileText } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface HeroProps {
@@ -31,42 +30,6 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
           </p>
           
           <div className="flex flex-col items-center justify-center gap-6 animate-fade-up">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
-              <Button 
-                size="lg" 
-                onClick={onInitiateCall} 
-                className="w-full bg-[#6a994e] hover:bg-[#5a8c3e] group flex items-center justify-center"
-              >
-                <Phone className="mr-2 h-4 w-4" />
-                <span>{t('button.startCall')}</span>
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              
-              <Button 
-                size="lg" 
-                asChild
-                className="w-full bg-[#6a994e] hover:bg-[#5a8c3e] group flex items-center justify-center"
-              >
-                <Link to="/chat">
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  <span>{t('button.chatNow')}</span>
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-              
-              <Button 
-                size="lg" 
-                asChild
-                className="w-full bg-[#6a994e] hover:bg-[#5a8c3e] group flex items-center justify-center"
-              >
-                <Link to="/report-issue">
-                  <FileText className="mr-2 h-4 w-4" />
-                  <span>{t('button.reportIssue')}</span>
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-            </div>
-            
             <div className="text-center text-sm text-muted-foreground">
               <p>{t('cta.choose')}</p>
             </div>
