@@ -1,84 +1,320 @@
 
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { CheckCircle, FileText, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/lib/supabase';
 import Header from '@/components/Header';
 import BackgroundGradient from '@/components/BackgroundGradient';
-import { useLanguage } from '@/context/LanguageContext';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowLeft, Check, FileText, Phone, Building, ExternalLink } from 'lucide-react';
 
-const ReportConfirmation = () => {
-  const { t } = useLanguage();
+interface Lawyer {
+  id: string;
+  name: string;
+  specialty: string;
+  description: string;
+  rating: number;
+  contact: string;
+}
+
+interface NGO {
+  id: string;
+  name: string;
+  focus: string;
+  description: string;
+  contact: string;
+  website: string;
+}
+
+const ReportConfirmation: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [callSummary, setCallSummary] = useState<string>('');
-  
-  useEffect(() => {
-    // Try to get summary from state first (passed directly from Call page)
-    const summaryFromState = location.state?.summary;
-    
-    if (summaryFromState) {
-      setCallSummary(summaryFromState);
-    } else {
-      // Fallback to check sessionStorage
-      const storedSummary = sessionStorage.getItem('callSummary');
-      if (storedSummary) {
-        setCallSummary(storedSummary);
-      }
-    }
-  }, [location]);
+  const { user } = useAuth();
+  const [isLegalViolation, setIsLegalViolation] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [lawyers, setLawyers] = useState<Lawyer[]>([]);
+  const [ngos, setNgos] = useState<NGO[]>([]);
 
-  const handleContinue = () => {
-    navigate('/report-issue', { state: { summary: callSummary } });
+  useEffect(() => {
+    if (!user) {
+      navigate('/sign-in');
+      return;
+    }
+
+    // Simulate checking the LLM analysis result
+    // In a real implementation, this would be fetched from the backend
+    const fetchAnalysisResults = async () => {
+      try {
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Mock data - in production this would come from the backend
+        const mockViolationProbability = Math.random();
+        setIsLegalViolation(mockViolationProbability > 0.2); // 80% chance of violation for demo purposes
+        
+        if (mockViolationProbability > 0.2) {
+          // Mock lawyer data - would be real data in production
+          setLawyers([
+            {
+              id: '1',
+              name: 'Sarah Johnson',
+              specialty: 'Labor Law, Wage Theft',
+              description: 'Specializes in representing workers in wage theft and overtime cases with 15+ years of experience.',
+              rating: 4.9,
+              contact: 'sarah.johnson@legalaid.org'
+            },
+            {
+              id: '2',
+              name: 'Michael Rodriguez',
+              specialty: 'Discrimination, Workplace Safety',
+              description: 'Advocate for immigrant workers with particular expertise in unsafe working conditions and discrimination.',
+              rating: 4.7,
+              contact: 'mrodriguez@workerjustice.com'
+            },
+            {
+              id: '3',
+              name: 'Lisa Chen',
+              specialty: 'Wrongful Termination, Retaliation',
+              description: 'Focused on helping workers who have faced termination or retaliation after reporting workplace violations.',
+              rating: 4.8,
+              contact: 'lisa@workersrights.org'
+            }
+          ]);
+        } else {
+          // Mock NGO data for cases with lower violation probability
+          setNgos([
+            {
+              id: '1',
+              name: 'Workers Rights Center',
+              focus: 'Workplace Education, Know Your Rights',
+              description: 'Provides free information about workplace rights and educational workshops for vulnerable workers.',
+              contact: 'info@workersrightscenter.org',
+              website: 'https://www.workersrightscenter.org'
+            },
+            {
+              id: '2',
+              name: 'Community Legal Support',
+              focus: 'Legal Clinics, Documentation Assistance',
+              description: 'Offers free legal clinics and help with documentation for workers in vulnerable situations.',
+              contact: 'help@communitylegal.org',
+              website: 'https://www.communitylegal.org'
+            },
+            {
+              id: '3',
+              name: 'Labor Justice Coalition',
+              focus: 'Advocacy, Community Support',
+              description: 'Community-based organization that advocates for better working conditions and provides peer support.',
+              contact: 'connect@laborjustice.org',
+              website: 'https://www.laborjustice.org'
+            }
+          ]);
+        }
+        
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching analysis results:', error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchAnalysisResults();
+  }, [user, navigate]);
+
+  const handleDownloadPdf = () => {
+    // In a real implementation, this would download a generated PDF of the report
+    alert('In a real implementation, this would download your report PDF');
   };
-  
-  const handleViewReports = () => {
-    navigate('/my-reports');
+
+  const handleContactHelper = (contact: string) => {
+    // In a real implementation, this would initiate contact with the helper
+    alert(`In a real implementation, this would connect you with ${contact}`);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <BackgroundGradient />
+        <Header />
+        
+        <main className="flex-1 flex items-center justify-center">
+          <Card className="w-full max-w-md">
+            <CardHeader>
+              <CardTitle>Analyzing Your Report</CardTitle>
+              <CardDescription>
+                We're using AI to analyze the details of your situation.
+                This may take a moment...
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-6">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+            </CardContent>
+          </Card>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
       <BackgroundGradient />
       <Header />
       
-      <main className="flex-1 flex flex-col items-center justify-center max-w-md mx-auto w-full p-4">
-        <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-md p-6 w-full">
-          <div className="text-center mb-6">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold mb-2">Call Summary</h1>
-            <p className="text-gray-600">
-              We've created a summary of your conversation with our legal assistant.
-            </p>
+      <main className="flex-1 py-8 px-4">
+        <div className="max-w-3xl mx-auto">
+          <div className="mb-4">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => navigate(-1)}
+              className="h-8 w-8"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
           </div>
           
-          {callSummary ? (
-            <div className="mb-6 border-l-4 border-primary pl-4 py-2 bg-primary/5 rounded">
-              <p className="text-sm">{callSummary}</p>
+          <Card className="mb-6">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <div className="bg-green-100 p-2 rounded-full">
+                  <Check className="h-6 w-6 text-green-600" />
+                </div>
+                <div>
+                  <CardTitle>Report Submitted Successfully</CardTitle>
+                  <CardDescription>
+                    Thank you for reporting your workplace issue. We've received your information.
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-4">
+                Our AI system has analyzed your report and generated a summary.
+              </p>
+              
+              {isLegalViolation ? (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+                  <h3 className="font-semibold text-amber-800 mb-2">Potential Legal Violation Detected</h3>
+                  <p className="text-amber-700">
+                    Based on our analysis, there is a high probability (&gt;80%) that your situation 
+                    may involve a legal violation of your workplace rights.
+                  </p>
+                </div>
+              ) : (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                  <h3 className="font-semibold text-blue-800 mb-2">Report Under Review</h3>
+                  <p className="text-blue-700">
+                    Based on our initial analysis, we need more information to determine if there's a legal violation. 
+                    We've connected you with support organizations that can help meanwhile.
+                  </p>
+                </div>
+              )}
+              
+              <div className="flex flex-wrap gap-4 mt-6">
+                <Button onClick={handleDownloadPdf} className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  Download Report PDF
+                </Button>
+                
+                <Button variant="outline" onClick={() => navigate('/chat')} className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" />
+                  Speak with an AI Advisor
+                </Button>
+                
+                <Button variant="outline" onClick={() => navigate('/my-reports')} className="flex items-center gap-2">
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to My Reports
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+          
+          {isLegalViolation ? (
+            <div>
+              <h2 className="text-xl font-bold mb-4">Recommended Legal Advisors</h2>
+              <p className="text-muted-foreground mb-6">
+                These legal professionals specialize in cases like yours and may be able to help.
+                Many offer free initial consultations.
+              </p>
+              
+              <div className="grid md:grid-cols-3 gap-4">
+                {lawyers.map(lawyer => (
+                  <Card key={lawyer.id}>
+                    <CardHeader>
+                      <CardTitle className="text-lg">{lawyer.name}</CardTitle>
+                      <CardDescription>{lawyer.specialty}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm">{lawyer.description}</p>
+                      <div className="flex items-center mt-2">
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
+                            <span key={i} className={`text-sm ${i < Math.floor(lawyer.rating) ? 'text-yellow-500' : 'text-gray-300'}`}>
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                        <span className="text-sm ml-1">{lawyer.rating.toFixed(1)}</span>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button 
+                        variant="outline" 
+                        onClick={() => handleContactHelper(lawyer.contact)} 
+                        className="w-full"
+                      >
+                        Contact
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
             </div>
           ) : (
-            <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md flex items-center">
-              <AlertTriangle className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0" />
-              <p className="text-sm text-yellow-700">No call summary available</p>
+            <div>
+              <h2 className="text-xl font-bold mb-4">Support Organizations</h2>
+              <p className="text-muted-foreground mb-6">
+                These organizations can provide information, education, and support for your situation.
+                All services are free and confidential.
+              </p>
+              
+              <div className="grid md:grid-cols-3 gap-4">
+                {ngos.map(ngo => (
+                  <Card key={ngo.id}>
+                    <CardHeader>
+                      <CardTitle className="text-lg">{ngo.name}</CardTitle>
+                      <CardDescription>{ngo.focus}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm">{ngo.description}</p>
+                      <div className="flex items-center mt-2">
+                        <Building className="h-4 w-4 text-primary mr-1" />
+                        <span className="text-sm text-muted-foreground">Non-profit organization</span>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex gap-2">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => handleContactHelper(ngo.contact)} 
+                        className="w-full"
+                      >
+                        Contact
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        asChild
+                      >
+                        <a href={ngo.website} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1">
+                          <ExternalLink className="h-4 w-4" />
+                          <span>Website</span>
+                        </a>
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
             </div>
           )}
-          
-          <div className="space-y-4">
-            <Button 
-              onClick={handleContinue}
-              className="w-full flex justify-center items-center gap-2"
-            >
-              <FileText className="h-4 w-4" />
-              Create Report Based on Summary
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              onClick={handleViewReports}
-              className="w-full"
-            >
-              View My Reports
-            </Button>
-          </div>
         </div>
       </main>
     </div>
