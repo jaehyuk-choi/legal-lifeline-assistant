@@ -57,14 +57,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) throw error;
       toast({
-        title: "Account created successfully",
-        description: "Please check your email for verification.",
+        title: "계정이 성공적으로 생성되었습니다",
+        description: "이메일을 확인해주세요. 이메일 확인 링크를 클릭하여 가입을 완료해주세요.",
       });
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Error creating account",
-        description: error.message || "An unexpected error occurred",
+        title: "계정 생성 오류",
+        description: error.message || "예상치 못한 오류가 발생했습니다",
       });
       throw error;
     } finally {
@@ -80,16 +80,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        if (error.message === "Email not confirmed") {
+          throw new Error("이메일 인증이 완료되지 않았습니다. 이메일함을 확인하거나 관리자에게 문의하세요.");
+        }
+        throw error;
+      }
+      
       toast({
-        title: "Signed in successfully",
-        description: "Welcome to Fairvio!",
+        title: "로그인 성공",
+        description: "Fairvio에 오신 것을 환영합니다!",
       });
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Authentication failed",
-        description: error.message || "Please check your email and password",
+        title: "인증 실패",
+        description: error.message || "이메일과 비밀번호를 확인해주세요",
       });
       throw error;
     } finally {
@@ -103,14 +109,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       toast({
-        title: "Signed out successfully",
-        description: "You have been logged out",
+        title: "로그아웃 성공",
+        description: "로그아웃되었습니다",
       });
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Error signing out",
-        description: error.message || "An unexpected error occurred",
+        title: "로그아웃 오류",
+        description: error.message || "예상치 못한 오류가 발생했습니다",
       });
     } finally {
       setLoading(false);

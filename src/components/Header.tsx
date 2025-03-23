@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import LanguageSelector from './LanguageSelector';
-import { MessageCircle, LogOut, User } from 'lucide-react';
+import { MessageCircle, LogOut, User, FileText } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 const Header: React.FC = () => {
@@ -29,7 +29,14 @@ const Header: React.FC = () => {
             <Button variant="outline" asChild className="rounded-full">
               <Link to="/chat">
                 <MessageCircle className="mr-2 h-4 w-4" />
-                <span>Chat</span>
+                <span>채팅</span>
+              </Link>
+            </Button>
+            
+            <Button variant="outline" asChild className="rounded-full">
+              <Link to="/report-issue">
+                <FileText className="mr-2 h-4 w-4" />
+                <span>문제 보고</span>
               </Link>
             </Button>
             
@@ -40,16 +47,16 @@ const Header: React.FC = () => {
                 </span>
                 <Button variant="outline" onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />
-                  Logout
+                  로그아웃
                 </Button>
               </>
             ) : (
               <>
                 <Button variant="outline" asChild>
-                  <Link to="/sign-in">Sign In</Link>
+                  <Link to="/sign-in">로그인</Link>
                 </Button>
                 <Button asChild>
-                  <Link to="/sign-up">Sign Up</Link>
+                  <Link to="/sign-up">회원가입</Link>
                 </Button>
               </>
             )}
