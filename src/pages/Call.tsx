@@ -139,8 +139,12 @@ const Call = () => {
   const handleCreateReport = () => {
     // Ensure the summary is stored in sessionStorage before navigating
     if (callSummary) {
-      sessionStorage.setItem('callSummary', callSummary);
-      navigate('/report-confirmation', { state: { summary: callSummary } });
+      navigate('/report-confirmation', { 
+        state: { 
+          summary: callSummary,
+          fromCall: true // 통화 페이지에서 왔음을 표시
+        } 
+      });
     } else {
       toast({
         title: "Error",
@@ -153,7 +157,6 @@ const Call = () => {
   const handleContinueChat = () => {
     // Pass the summary to the chat page
     if (callSummary) {
-      sessionStorage.setItem('callSummary', callSummary);
       navigate('/chat', { state: { summary: callSummary } });
     } else {
       navigate('/chat');

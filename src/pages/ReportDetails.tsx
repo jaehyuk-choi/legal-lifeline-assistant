@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
@@ -244,7 +245,9 @@ const ReportDetails: React.FC = () => {
           title: "Report Submitted Successfully",
           description: "We've received your report and will review it shortly.",
         });
-        navigate('/report-confirmation');
+        // 통화 요약 정보 삭제
+        sessionStorage.removeItem('callSummary');
+        navigate('/my-reports');
       }
     } catch (error: any) {
       console.error('Error submitting report:', error);
