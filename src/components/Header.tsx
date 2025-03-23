@@ -1,47 +1,27 @@
 
-import React, { useEffect, useState } from 'react';
-import { Scale } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import LanguageSelector from './LanguageSelector';
 
 const Header: React.FC = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <header 
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out",
-        scrolled ? "py-2 glass shadow-sm" : "py-4 bg-transparent"
-      )}
-    >
-      <div className="container mx-auto container-padding">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Scale className="h-6 w-6 text-primary" />
-            <span className="font-display font-semibold text-lg sm:text-xl">LegalLifeline</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
-                How It Works
-              </a>
-              <a href="#demo" className="text-sm font-medium hover:text-primary transition-colors">
-                Demo
-              </a>
-              <a href="#faq" className="text-sm font-medium hover:text-primary transition-colors">
-                FAQ
-              </a>
-            </nav>
-            <LanguageSelector />
+    <header className="w-full py-4 px-6 md:px-8 bg-transparent z-10">
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <Link to="/" className="flex items-center">
+          <span className="font-bold text-lg md:text-xl">LegalAssistant</span>
+        </Link>
+        
+        <div className="flex items-center gap-4">
+          <LanguageSelector />
+          
+          <div className="hidden sm:flex items-center gap-2 md:gap-4">
+            <Button variant="outline" asChild>
+              <Link to="/sign-in">Sign In</Link>
+            </Button>
+            <Button asChild>
+              <Link to="/sign-up">Sign Up</Link>
+            </Button>
           </div>
         </div>
       </div>
