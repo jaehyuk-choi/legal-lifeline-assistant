@@ -688,12 +688,14 @@ const translations: Translations = {
 
 interface LanguageContextType {
   language: LanguageCode;
+  currentLanguage: LanguageCode; // Add this property
   setLanguage: (lang: LanguageCode) => void;
   t: (key: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType>({
   language: 'en',
+  currentLanguage: 'en', // Add this property
   setLanguage: () => {},
   t: (key: string) => key,
 });
@@ -726,7 +728,12 @@ export const LanguageProvider: React.FC<{children: React.ReactNode}> = ({ childr
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ 
+      language, 
+      currentLanguage: language, // Add this property, which is an alias for language
+      setLanguage, 
+      t 
+    }}>
       {children}
     </LanguageContext.Provider>
   );
