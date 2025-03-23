@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/context/LanguageContext';
-import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 interface CallToActionProps {
@@ -16,35 +16,21 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const { t, language } = useLanguage();
+  const navigate = useNavigate();
 
-  const handleInitiateCall = async () => {
+  const handleInitiateCall = () => {
     setIsLoading(true);
     
     try {
-      // Call our edge function that connects to Twilio with the hard-coded credentials
-      const { data, error } = await supabase.functions.invoke('twilio-call', {
-        body: {
-          source: 'call-to-action',
-          timestamp: new Date().toISOString(),
-        }
-      });
-
-      if (error) {
-        throw error;
-      }
-      
-      toast({
-        title: t('toast.callInitiated'),
-        description: t('toast.callDescription'),
-      });
+      // Navigate to the call page instead of initiating the call directly
+      navigate('/call');
     } catch (error) {
-      console.error('Error initiating call:', error);
+      console.error('Error navigating to call page:', error);
       toast({
         title: t('toast.error'),
         description: t('toast.callError'),
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };

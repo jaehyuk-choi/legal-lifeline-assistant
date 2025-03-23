@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
@@ -70,13 +69,11 @@ const Chat: React.FC = () => {
     setIsLoading(true);
     
     try {
-      // Format conversation history for the API
       const conversationHistory = messages.map(msg => ({
         role: msg.role,
         content: msg.content
       }));
 
-      // Call our Supabase Edge Function that connects to your Python LLM API
       const { data, error } = await supabase.functions.invoke('chat-llm', {
         body: {
           message: input,
@@ -108,52 +105,19 @@ const Chat: React.FC = () => {
     }
   };
 
-  const handlePhoneCall = async () => {
-    setIsLoading(true);
-    
-    try {
-      // Call your Flask backend to initiate a call
-      const response = await fetch('http://localhost:5000/initiate_call', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          timestamp: new Date().toISOString(),
-        }),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to initiate call');
-      }
-      
-      toast({
-        title: "Call connecting",
-        description: "You will receive a call shortly.",
-      });
-    } catch (error) {
-      console.error('Error initiating call:', error);
-      toast({
-        title: "Call connection failed",
-        description: "There was an error connecting your call. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+  const handlePhoneCall = () => {
+    navigate('/call');
   };
 
   const handleEndChat = async () => {
     setIsSummarizing(true);
     
     try {
-      // Format conversation for the API
       const conversationHistory = messages.map(msg => ({
         role: msg.role,
         content: msg.content
       }));
 
-      // Call edge function to get a summary
       const { data, error } = await supabase.functions.invoke('chat-llm', {
         body: {
           message: "Please summarize our conversation",
@@ -184,7 +148,6 @@ const Chat: React.FC = () => {
   };
 
   const handleCreateReport = () => {
-    // Store conversation data in sessionStorage to use in the report
     sessionStorage.setItem('conversationSummary', conversationSummary);
     sessionStorage.setItem('conversationMessages', JSON.stringify(messages));
     navigate('/report-confirmation');

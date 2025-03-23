@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Chat from "./pages/Chat";
+import Call from "./pages/Call";
 import ReportIssue from "./pages/ReportIssue";
 import ReportDetails from "./pages/ReportDetails";
 import ReportConfirmation from "./pages/ReportConfirmation";
@@ -41,6 +42,7 @@ const AppRoutes = () => (
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/chat" element={<Chat />} />
+      <Route path="/call" element={<Call />} />
       <Route path="/report-issue" element={<ReportIssue />} />
       <Route path="/report-details" element={<ReportDetails />} />
       <Route path="/report-confirmation" element={<ReportConfirmation />} />
