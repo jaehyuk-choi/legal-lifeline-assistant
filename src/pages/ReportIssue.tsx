@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
@@ -42,7 +41,7 @@ const categoryTranslations = {
     },
     hi: {
       title: 'वेतन चोरी',
-      description: 'पूर्ण भुगतान न मिलना, अवैतनिक ओवरटाइम, या घड़ी के बाहर काम करना'
+      description: 'पूर्ण भुगतान न मिलना, अवैतनिक ओवरटाइム, या घड़ी के बाहर काम करना'
     }
   },
   'unsafeConditions': {
@@ -312,6 +311,42 @@ const uiTranslations = {
     zh: '处理中...',
     ko: '처리 중...',
     hi: 'प्रोसेसिंग...'
+  },
+  'reportIssue': {
+    'title': {
+      en: 'Report a Workplace Issue',
+      es: 'Reportar un Problema en el Lugar de Trabajo',
+      fr: 'Signaler un Problème sur le Lieu de Travail',
+      zh: '报告工作场所问题',
+      ko: '직장 문제 신고',
+      hi: 'कार्यस्थल समस्या की रिपोर्ट करें'
+    },
+    'subtitle': {
+      en: 'Select the issues you\'ve experienced at your workplace. In the next step, we\'ll ask for more details.',
+      es: 'Seleccione los problemas que ha experimentado en su lugar de trabajo. En el siguiente paso, le pediremos más detalles.',
+      fr: 'Sélectionnez les problèmes que vous avez rencontrés sur votre lieu de travail. À l\'étape suivante, nous vous demanderons plus de détails.',
+      zh: '选择您在工作场所遇到的问题。在下一步中，我们将询问更多详细信息。',
+      ko: '직장에서 경험한 문제를 선택하세요. 다음 단계에서 더 자세한 정보를 요청할 것입니다。',
+      hi: 'अपने कार्यस्थल पर अनुभव की गई समस्याओं का चयन करें। अगले चरण में, हम आपसे अधिक विवरण पूछेंगे।'
+    },
+    'chatWithAI': {
+      en: 'Chat with AI Assistant',
+      es: 'Chatear con Asistente de IA',
+      fr: 'Discuter con l\'Assistant IA',
+      zh: '与AI助手聊天',
+      ko: 'AI 도우미와 채팅',
+      hi: 'AI सहायक से चैट करें'
+    }
+  },
+  'reportDetails': {
+    'continueToDetails': {
+      en: 'Continue to Details',
+      es: 'Continuar a Detalles',
+      fr: 'Continuer vers les Détails',
+      zh: '继续填写详细信息',
+      ko: '세부 정보로 계속',
+      hi: 'विवरण पर जारी रखें'
+    }
   }
 };
 
