@@ -26,6 +26,8 @@ const Call = () => {
   const [callSummary, setCallSummary] = useState('');
   const [showSummary, setShowSummary] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [retries, setRetries] = useState(0);
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   // Start call when page loads
   useEffect(() => {
@@ -40,10 +42,14 @@ const Call = () => {
         setCallDuration(prev => prev + 1);
       }, 1000);
       
+      setTimer(timer);
       return () => clearInterval(timer);
     }, 2000);
     
-    return () => clearTimeout(connectingTimeout);
+    return () => {
+      clearTimeout(connectingTimeout);
+      if (timer) clearInterval(timer);
+    };
   }, []);
 
   const initiateCall = async () => {
@@ -59,8 +65,11 @@ const Call = () => {
       });
 
       if (error) {
+        console.error('Supabase function error:', error);
         throw error;
       }
+      
+      console.log('Call initiated response:', data);
       
       toast({
         title: "Call Initiated",
@@ -68,11 +77,18 @@ const Call = () => {
       });
     } catch (error) {
       console.error('Error initiating call:', error);
-      toast({
-        title: "Error",
-        description: "Failed to initiate call. Please try again.",
-        variant: "destructive",
-      });
+      
+      // Only retry a limited number of times
+      if (retries < 2) {
+        setRetries(prev => prev + 1);
+        setTimeout(() => initiateCall(), 2000); // Retry after 2 seconds
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to initiate call. Please try again later.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -80,6 +96,7 @@ const Call = () => {
 
   const handleEndCall = () => {
     setCallStatus('ended');
+    if (timer) clearInterval(timer);
     generateCallSummary();
   };
 

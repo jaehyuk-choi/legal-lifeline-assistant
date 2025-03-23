@@ -14,16 +14,21 @@ serve(async (req) => {
   }
 
   try {
-    // Use hardcoded credentials for demonstration
-    const ACCOUNT_SID = "AC36915b9974948d6e8d75c71023b1d77c";
-    const AUTH_TOKEN = "8a6da27cc280081912b8e326e0c3ad40";
-    const FROM_NUMBER = "+19207893459";
+    // Get environment variables for Twilio credentials
+    const ACCOUNT_SID = Deno.env.get('TWILIO_ACCOUNT_SID');
+    const AUTH_TOKEN = Deno.env.get('TWILIO_AUTH_TOKEN');
+    const FROM_NUMBER = Deno.env.get('TWILIO_PHONE_NUMBER');
     
     // Get the phone number from the request or use default
     const { phoneNumber, source, timestamp } = await req.json();
-    const TO_NUMBER = phoneNumber || "+14374199290";
+    const TO_NUMBER = phoneNumber || Deno.env.get('DEFAULT_TO_NUMBER') || "+14374199290";
     
-    if (!ACCOUNT_SID || !AUTH_TOKEN || !FROM_NUMBER || !TO_NUMBER) {
+    if (!ACCOUNT_SID || !AUTH_TOKEN || !FROM_NUMBER) {
+      console.error('Missing Twilio credentials:', { 
+        hasSID: !!ACCOUNT_SID, 
+        hasToken: !!AUTH_TOKEN, 
+        hasFromNumber: !!FROM_NUMBER 
+      });
       throw new Error('Missing required Twilio configuration');
     }
 
@@ -32,8 +37,11 @@ serve(async (req) => {
     // Create the auth string for Twilio API
     const auth = btoa(`${ACCOUNT_SID}:${AUTH_TOKEN}`);
     
-    // The exact webhook URL that was specified
-    const webhookUrl = "https://92f6-38-113-160-139.ngrok-free.app/lang_select";
+    // Use environment variable for webhook URL or fallback
+    const webhookUrl = Deno.env.get('TWILIO_WEBHOOK_URL') || 
+                        "https://0c5e-148-252-133-83.ngrok-free.app/lang_select";
+
+    console.log(`Using webhook URL: ${webhookUrl}`);
 
     // Make the API call to Twilio to initiate the call
     const response = await fetch(
@@ -52,13 +60,14 @@ serve(async (req) => {
       }
     );
 
+    const responseText = await response.text();
+    
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Error from Twilio API:', errorText);
-      throw new Error(`Failed to initiate call: ${errorText}`);
+      console.error('Error from Twilio API:', responseText);
+      throw new Error(`Failed to initiate call: ${responseText}`);
     }
 
-    const data = await response.json();
+    const data = JSON.parse(responseText);
     console.log('Call initiated successfully:', data);
     
     return new Response(JSON.stringify({ 
