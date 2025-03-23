@@ -1,13 +1,17 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Scale, Github, Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface FooterProps {
   className?: string;
 }
 
 const Footer: React.FC<FooterProps> = ({ className }) => {
+  const { t } = useLanguage();
+  
   return (
     <footer className={cn("py-12 bg-secondary/50", className)}>
       <div className="container mx-auto container-padding">
@@ -18,14 +22,14 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
           </div>
           
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+            <Link to="/privacy-policy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              {t('footer.privacy')}
+            </Link>
+            <Link to="/terms-of-service" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              {t('footer.terms')}
+            </Link>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Terms of Service
-            </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Contact
+              {t('footer.contact')}
             </a>
           </div>
         </div>

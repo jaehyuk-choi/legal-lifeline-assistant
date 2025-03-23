@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 
 const AuthHeader: React.FC = () => {
   const location = useLocation();
@@ -17,13 +18,14 @@ const AuthHeader: React.FC = () => {
           <img 
             src="/lovable-uploads/99788104-fd74-4915-a14c-f0e675de1499.png" 
             alt="FairVio Logo" 
-            className="h-16 md:h-20 mr-2" 
+            className="h-20 md:h-24 mr-2" 
           />
         </Link>
         
         <div className="flex items-center gap-2 md:gap-4">
           {isHomePage ? (
             <>
+              <LanguageSelector className="mr-2" />
               <Button variant="outline" asChild className="rounded-full">
                 <Link to="/chat">
                   <MessageCircle className="mr-2 h-4 w-4" />
@@ -38,9 +40,12 @@ const AuthHeader: React.FC = () => {
               </Button>
             </>
           ) : (
-            <Button variant="ghost" asChild>
-              <Link to="/">{t('nav.home')}</Link>
-            </Button>
+            <>
+              <LanguageSelector className="mr-2" />
+              <Button variant="ghost" asChild>
+                <Link to="/">{t('nav.home')}</Link>
+              </Button>
+            </>
           )}
         </div>
       </div>

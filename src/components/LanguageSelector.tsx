@@ -17,6 +17,7 @@ const languages = [
   { code: 'fr', name: 'Français' },
   { code: 'zh', name: '中文' },
   { code: 'ko', name: '한국어' },
+  { code: 'hi', name: 'हिन्दी' },
 ];
 
 interface LanguageSelectorProps {

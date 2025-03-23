@@ -22,6 +22,7 @@ const ReportIssue: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useLanguage();
 
@@ -97,10 +98,11 @@ const ReportIssue: React.FC = () => {
       // In a real implementation, we would save the selected issues to the database
       await new Promise(resolve => setTimeout(resolve, 500));
       
-      // Navigate to the detailed report form with the selected issues
+      // Navigate to the detailed report form with the selected issues and anonymity preference
       navigate('/report-details', { 
         state: { 
-          selectedIssues: selectedIssues.map(id => issues.find(issue => issue.id === id))
+          selectedIssues: selectedIssues.map(id => issues.find(issue => issue.id === id)),
+          isAnonymous: isAnonymous
         } 
       });
     } catch (error) {
@@ -168,6 +170,22 @@ const ReportIssue: React.FC = () => {
           <p className="text-sm text-muted-foreground mb-4">
             {t('reportIssue.selectedIssues')}: <strong>{selectedIssues.length}</strong>
           </p>
+          
+          <div className="flex items-center gap-2 mb-4">
+            <Checkbox
+              id="anonymous"
+              checked={isAnonymous}
+              onCheckedChange={(checked) => setIsAnonymous(checked === true)}
+            />
+            <div>
+              <label htmlFor="anonymous" className="text-sm font-medium cursor-pointer">
+                {t('reportIssue.anonymous')}
+              </label>
+              <p className="text-xs text-muted-foreground">
+                {t('reportIssue.anonymousDescription')}
+              </p>
+            </div>
+          </div>
           
           <div className="flex gap-4">
             <Button

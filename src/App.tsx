@@ -15,6 +15,8 @@ import ReportIssue from "./pages/ReportIssue";
 import ReportDetails from "./pages/ReportDetails";
 import ReportConfirmation from "./pages/ReportConfirmation";
 import MyReports from "./pages/MyReports";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +44,8 @@ const AppRoutes = () => (
       <Route path="/report-details" element={<ReportDetails />} />
       <Route path="/report-confirmation" element={<ReportConfirmation />} />
       <Route path="/my-reports" element={<MyReports />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
