@@ -605,4 +605,4 @@ const translations: Translations = {
     es: 'No, nuestro servicio está disponible para todos los trabajadores independientemente de su estado migratorio. No preguntamos ni requerimos ninguna documentación para brindar asistencia.',
     fr: 'Non, notre service est disponible pour tous les travailleurs, quel que soit leur statut d\'immigration. Nous ne demandons ni n\'exigeons aucune documentation pour fournir une assistance.',
     zh: '不，我们的服务适用于所有工人，无论其移民身份如何。我们不会询问或要求任何文件来提供帮助。',
-    ko: '아니요, 저희 서비스는 이민 신분과 관계없이 모든 근로자가 이용할 수 있습니다
+    ko: '아니요, 저희 서비스는 이민 신분과 관계없이 모든 근로자가 이용할
