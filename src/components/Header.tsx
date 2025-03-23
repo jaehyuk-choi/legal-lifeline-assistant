@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -5,6 +6,7 @@ import LanguageSelector from './LanguageSelector';
 import { MessageCircle, LogOut, User, FileText, List } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
+
 const Header: React.FC = () => {
   const {
     user,
@@ -14,10 +16,12 @@ const Header: React.FC = () => {
   const {
     t
   } = useLanguage();
+  
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
   };
+  
   return <header className="w-full py-4 px-6 md:px-8 bg-transparent z-10">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
@@ -28,20 +32,6 @@ const Header: React.FC = () => {
           <LanguageSelector />
           
           <div className="hidden sm:flex items-center gap-2 md:gap-4">
-            <Button variant="outline" asChild className="rounded-full">
-              <Link to="/chat">
-                <MessageCircle className="mr-2 h-4 w-4" />
-                <span>{t('button.chatNow')}</span>
-              </Link>
-            </Button>
-            
-            <Button variant="outline" asChild className="rounded-full">
-              <Link to="/report-issue">
-                <FileText className="mr-2 h-4 w-4" />
-                <span>{t('button.reportIssue')}</span>
-              </Link>
-            </Button>
-            
             {user && <Button variant="outline" asChild className="rounded-full">
                 <Link to="/my-reports">
                   <List className="mr-2 h-4 w-4" />

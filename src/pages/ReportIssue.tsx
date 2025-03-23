@@ -24,74 +24,60 @@ const ReportIssue: React.FC = () => {
   const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t, currentLanguage } = useLanguage();
+  const { t, language } = useLanguage();
 
-  // Define issue options with direct text instead of translation keys
-  const issues: IssueOption[] = [
-    {
-      id: 'wage-theft',
-      title: currentLanguage === 'ko' ? '임금 갈취' : 'Wage Theft',
-      description: currentLanguage === 'ko' 
-        ? '미지급 임금, 최저임금 위반, 초과근무 수당 미지급 등' 
-        : 'Unpaid wages, minimum wage violations, or unpaid overtime'
-    },
-    {
-      id: 'unsafe-conditions',
-      title: currentLanguage === 'ko' ? '불안전한 작업 환경' : 'Unsafe Working Conditions',
-      description: currentLanguage === 'ko' 
-        ? '위험한 작업 환경, 안전 장비 부족, 건강 위험 요소' 
-        : 'Dangerous working environment, lack of safety equipment, or health hazards'
-    },
-    {
-      id: 'discrimination',
-      title: currentLanguage === 'ko' ? '차별' : 'Discrimination',
-      description: currentLanguage === 'ko' 
-        ? '인종, 성별, 종교, 국적, 장애 또는 다른 보호된 특성에 기반한 차별' 
-        : 'Discrimination based on race, gender, religion, national origin, disability, or other protected characteristics'
-    },
-    {
-      id: 'wrongful-termination',
-      title: currentLanguage === 'ko' ? '부당 해고' : 'Wrongful Termination',
-      description: currentLanguage === 'ko' 
-        ? '불법적인 이유로 해고되거나 계약 위반으로 해고된 경우' 
-        : 'Being fired for an illegal reason or in violation of an employment contract'
-    },
-    {
-      id: 'hour-violation',
-      title: currentLanguage === 'ko' ? '근무 시간 위반' : 'Hour Violations',
-      description: currentLanguage === 'ko' 
-        ? '휴식 시간 미제공, 초과 근무 강요, 불법적인 교대 패턴' 
-        : 'Denial of breaks, forced overtime, or illegal shift patterns'
-    },
-    {
-      id: 'retaliation',
-      title: currentLanguage === 'ko' ? '보복' : 'Retaliation',
-      description: currentLanguage === 'ko' 
-        ? '합법적인 권리 행사에 대한 고용주의 보복 행위' 
-        : 'Employer retaliation for exercising your legal rights'
-    },
-    {
-      id: 'benefits-denial',
-      title: currentLanguage === 'ko' ? '복지 혜택 거부' : 'Benefits Denial',
-      description: currentLanguage === 'ko' 
-        ? '약속된 건강 보험, 퇴직금, 또는 다른 혜택의 부당한 거부' 
-        : 'Wrongful denial of promised health insurance, retirement, or other benefits'
-    },
-    {
-      id: 'immigration-threat',
-      title: currentLanguage === 'ko' ? '이민 신분 위협' : 'Immigration Status Threats',
-      description: currentLanguage === 'ko' 
-        ? '이민 신분이나 체류 자격을 이용한 고용주의 위협이나 협박' 
-        : 'Employer threats or intimidation related to immigration status'
-    },
-    {
-      id: 'other',
-      title: currentLanguage === 'ko' ? '기타 문제' : 'Other Issues',
-      description: currentLanguage === 'ko' 
-        ? '위에 나열되지 않은 직장 관련 문제' 
-        : 'Workplace issues not listed above'
-    }
-  ];
+  // Define issue options with translations
+  const getIssueOptions = (): IssueOption[] => {
+    return [
+      {
+        id: 'wage-theft',
+        title: t('reportCategories.wageTheft.title'),
+        description: t('reportCategories.wageTheft.description')
+      },
+      {
+        id: 'unsafe-conditions',
+        title: t('reportCategories.unsafeConditions.title'),
+        description: t('reportCategories.unsafeConditions.description')
+      },
+      {
+        id: 'discrimination',
+        title: t('reportCategories.discrimination.title'),
+        description: t('reportCategories.discrimination.description')
+      },
+      {
+        id: 'wrongful-termination',
+        title: t('reportCategories.wrongfulTermination.title'),
+        description: t('reportCategories.wrongfulTermination.description')
+      },
+      {
+        id: 'hour-violation',
+        title: t('reportCategories.hourViolation.title'),
+        description: t('reportCategories.hourViolation.description')
+      },
+      {
+        id: 'retaliation',
+        title: t('reportCategories.retaliation.title'),
+        description: t('reportCategories.retaliation.description')
+      },
+      {
+        id: 'benefits-denial',
+        title: t('reportCategories.benefitsDenial.title'),
+        description: t('reportCategories.benefitsDenial.description')
+      },
+      {
+        id: 'immigration-threat',
+        title: t('reportCategories.immigrationThreat.title'),
+        description: t('reportCategories.immigrationThreat.description')
+      },
+      {
+        id: 'other',
+        title: t('reportCategories.other.title'),
+        description: t('reportCategories.other.description')
+      }
+    ];
+  };
+
+  const issues = getIssueOptions();
 
   const handleIssueToggle = (issueId: string) => {
     setSelectedIssues(prev => 
@@ -151,13 +137,11 @@ const ReportIssue: React.FC = () => {
               <ArrowLeft className="h-4 w-4" />
             </Button>
             <h1 className="text-2xl font-bold">
-              {currentLanguage === 'ko' ? '직장 문제 신고하기' : 'Report a Workplace Issue'}
+              {t('reportIssue.title')}
             </h1>
           </div>
           <p className="text-muted-foreground mt-2">
-            {currentLanguage === 'ko' 
-              ? '직장에서 경험한 문제를 선택하세요. 다음 단계에서 더 자세한 정보를 요청할 것입니다.' 
-              : 'Select the issues you\'ve experienced at your workplace. In the next step, we\'ll ask for more details.'}
+            {t('reportIssue.subtitle')}
           </p>
         </div>
         
@@ -191,7 +175,7 @@ const ReportIssue: React.FC = () => {
         
         <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-md p-4">
           <p className="text-sm text-muted-foreground mb-4">
-            {currentLanguage === 'ko' ? '선택한 문제:' : 'Selected issues:'} <strong>{selectedIssues.length}</strong>
+            {t('reportIssue.selectedIssues')}: <strong>{selectedIssues.length}</strong>
           </p>
           
           <div className="flex items-center gap-2 mb-4">
@@ -202,12 +186,10 @@ const ReportIssue: React.FC = () => {
             />
             <div>
               <label htmlFor="anonymous" className="text-sm font-medium cursor-pointer">
-                {currentLanguage === 'ko' ? '익명으로 신고하기' : 'Report anonymously'}
+                {t('reportIssue.anonymousReport')}
               </label>
               <p className="text-xs text-muted-foreground">
-                {currentLanguage === 'ko' 
-                  ? '익명 신고는 개인 정보 없이 처리됩니다.' 
-                  : 'Anonymous reports will be processed without your personal information.'}
+                {t('reportIssue.anonymousDescription')}
               </p>
             </div>
           </div>
@@ -219,8 +201,8 @@ const ReportIssue: React.FC = () => {
               className="w-full bg-[#6a994e] hover:bg-[#5a8c3e]"
             >
               {isSubmitting 
-                ? (currentLanguage === 'ko' ? '처리 중...' : 'Processing...') 
-                : (currentLanguage === 'ko' ? '상세 정보 입력으로 계속' : 'Continue to Details')}
+                ? t('reportIssue.processing')
+                : t('reportIssue.continueToDetails')}
             </Button>
             
             <Button
@@ -228,14 +210,12 @@ const ReportIssue: React.FC = () => {
               onClick={() => navigate('/chat')}
               className="w-full"
             >
-              {currentLanguage === 'ko' ? 'AI와 채팅하기' : 'Chat with AI'}
+              {t('reportIssue.chatWithAI')}
             </Button>
           </div>
           
           <p className="text-xs text-muted-foreground mt-4">
-            ℹ️ {currentLanguage === 'ko' 
-              ? '모든 신고는 기밀로 처리되며 법적 지원을 위해 검토됩니다.' 
-              : 'All reports are confidential and will be reviewed for legal assistance.'}
+            ℹ️ {t('reportIssue.confidentialNote')}
           </p>
         </div>
       </main>
