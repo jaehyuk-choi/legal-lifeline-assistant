@@ -59,12 +59,7 @@ const HowItWorks: React.FC<HowItWorksProps> = ({ className }) => {
               <h3 className="text-xl font-semibold mb-3">{t(step.titleKey)}</h3>
               <p className="text-muted-foreground">{t(step.descriptionKey)}</p>
               
-              {/* Progress line between steps (only visible on desktop) */}
-              {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 right-0 w-full h-[2px] bg-border" style={{ width: 'calc(50%)' }}>
-                  <div className="absolute right-0 h-3 w-3 bg-primary rounded-full -top-[5px] -right-[5px]"></div>
-                </div>
-              )}
+              {/* Removed the progress line between steps */}
             </div>
           ))}
         </div>
