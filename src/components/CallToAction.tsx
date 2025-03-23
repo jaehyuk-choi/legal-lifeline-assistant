@@ -84,7 +84,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
             >
               <Link to="/chat">
                 <MessageCircle className="mr-2 h-4 w-4" />
-                <span>챗봇과 대화하기</span>
+                <span>{t('button.chatNow')}</span>
               </Link>
             </Button>
             
@@ -96,7 +96,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
             >
               <Link to="/report-issue">
                 <FileText className="mr-2 h-4 w-4" />
-                <span>보고서 작성하기</span>
+                <span>{t('button.reportIssue')}</span>
               </Link>
             </Button>
           </div>
