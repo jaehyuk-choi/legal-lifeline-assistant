@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import BackgroundGradient from '@/components/BackgroundGradient';
 import { useAuth } from '@/context/AuthContext';
+import Header from '@/components/Header';
 
 // Form schema for validation
 const formSchema = z.object({
@@ -36,7 +37,14 @@ type FormValues = z.infer<typeof formSchema>;
 const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { signUp } = useAuth();
+  const { signUp, user } = useAuth();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -65,6 +73,7 @@ const SignUp = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <BackgroundGradient />
+      <Header />
       
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
         <div className="w-full max-w-md space-y-8 bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md">

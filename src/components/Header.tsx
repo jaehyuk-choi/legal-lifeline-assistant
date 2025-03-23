@@ -1,16 +1,18 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import LanguageSelector from './LanguageSelector';
-import { MessageCircle, LogOut } from 'lucide-react';
+import { MessageCircle, LogOut, User } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 const Header: React.FC = () => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     await signOut();
+    navigate('/');
   };
 
   return (
@@ -50,6 +52,21 @@ const Header: React.FC = () => {
                   <Link to="/sign-up">Sign Up</Link>
                 </Button>
               </>
+            )}
+          </div>
+          
+          {/* Mobile menu toggle for small screens */}
+          <div className="sm:hidden">
+            {user ? (
+              <Button variant="ghost" size="icon" onClick={handleSignOut}>
+                <LogOut className="h-5 w-5" />
+              </Button>
+            ) : (
+              <Button variant="ghost" size="icon" asChild>
+                <Link to="/sign-in">
+                  <User className="h-5 w-5" />
+                </Link>
+              </Button>
             )}
           </div>
         </div>

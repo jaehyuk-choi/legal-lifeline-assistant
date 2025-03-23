@@ -22,15 +22,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        console.log('Auth state changed:', event);
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      }
+    );
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
@@ -80,7 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (error) throw error;
       toast({
         title: "Signed in successfully",
-        description: "Welcome back!",
+        description: "Welcome to Fairvio!",
       });
     } catch (error: any) {
       toast({
@@ -99,6 +102,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(true);
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
+      toast({
+        title: "Signed out successfully",
+        description: "You have been logged out",
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",
