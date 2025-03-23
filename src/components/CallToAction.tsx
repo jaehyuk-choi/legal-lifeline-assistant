@@ -21,7 +21,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
     setIsLoading(true);
     
     try {
-      // Call our edge function that connects to Twilio
+      // Call our edge function that connects to Twilio with the hard-coded credentials
       const { data, error } = await supabase.functions.invoke('twilio-call', {
         body: {
           source: 'call-to-action',

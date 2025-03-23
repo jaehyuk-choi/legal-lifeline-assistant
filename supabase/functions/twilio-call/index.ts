@@ -14,13 +14,14 @@ serve(async (req) => {
   }
 
   try {
-    const ACCOUNT_SID = Deno.env.get('TWILIO_ACCOUNT_SID');
-    const AUTH_TOKEN = Deno.env.get('TWILIO_AUTH_TOKEN');
-    const FROM_NUMBER = Deno.env.get('TWILIO_FROM_NUMBER');
+    // Use hardcoded credentials for demonstration
+    const ACCOUNT_SID = "AC36915b9974948d6e8d75c71023b1d77c";
+    const AUTH_TOKEN = "8a6da27cc280081912b8e326e0c3ad40";
+    const FROM_NUMBER = "+19207893459";
     
-    // Get the phone number from the request
+    // Get the phone number from the request or use default
     const { phoneNumber, source, timestamp } = await req.json();
-    const TO_NUMBER = phoneNumber || Deno.env.get('TWILIO_TO_NUMBER');
+    const TO_NUMBER = phoneNumber || "+14374199290";
     
     if (!ACCOUNT_SID || !AUTH_TOKEN || !FROM_NUMBER || !TO_NUMBER) {
       throw new Error('Missing required Twilio configuration');
@@ -31,8 +32,8 @@ serve(async (req) => {
     // Create the auth string for Twilio API
     const auth = btoa(`${ACCOUNT_SID}:${AUTH_TOKEN}`);
     
-    // The URL to your webhook that handles the call
-    const webhookUrl = Deno.env.get('TWILIO_WEBHOOK_URL') || 'https://92f6-38-113-160-139.ngrok-free.app/lang_select';
+    // The exact webhook URL that was specified
+    const webhookUrl = "https://92f6-38-113-160-139.ngrok-free.app/lang_select";
 
     // Make the API call to Twilio to initiate the call
     const response = await fetch(
