@@ -24,6 +24,17 @@ import {
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowLeft, Save } from 'lucide-react';
+import { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface IssueOption {
   id: string;
@@ -48,7 +59,10 @@ const ReportDetails: React.FC = () => {
   const { user } = useAuth();
   const [activeIssueIndex, setActiveIssueIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<{ [key: string]: File[] }>({});
+  const [showExitAlert, setShowExitAlert] = useState(false);
+  const [savedForms, setSavedForms] = useState<{ [key: string]: FormValues }>({});
 
   // Get selected issues from navigation state
   const selectedIssues = location.state?.selectedIssues as IssueOption[] || [];
@@ -62,11 +76,11 @@ const ReportDetails: React.FC = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      when: '',
-      where: '',
-      who: '',
-      what: '',
-      evidenceDescription: ''
+      when: savedForms[selectedIssues[activeIssueIndex]?.id]?.when || '',
+      where: savedForms[selectedIssues[activeIssueIndex]?.id]?.where || '',
+      who: savedForms[selectedIssues[activeIssueIndex]?.id]?.who || '',
+      what: savedForms[selectedIssues[activeIssueIndex]?.id]?.what || '',
+      evidenceDescription: savedForms[selectedIssues[activeIssueIndex]?.id]?.evidenceDescription || ''
     }
   });
 
@@ -85,6 +99,40 @@ const ReportDetails: React.FC = () => {
       [issueId]: prev[issueId].filter((_, i) => i !== index)
     }));
   };
+  
+  const handleSaveForm = async () => {
+    const values = form.getValues();
+    
+    setIsSaving(true);
+    try {
+      setSavedForms(prev => ({
+        ...prev,
+        [selectedIssues[activeIssueIndex].id]: values
+      }));
+      
+      toast({
+        title: "Progress saved",
+        description: "Your report information has been saved.",
+      });
+    } catch (error) {
+      console.error('Error saving form:', error);
+      toast({
+        title: "Save failed",
+        description: "There was an error saving your progress.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleBackClick = () => {
+    if (form.formState.isDirty) {
+      setShowExitAlert(true);
+    } else {
+      navigate('/report-issue');
+    }
+  };
 
   const handleSubmit = async (values: FormValues) => {
     if (!user) {
@@ -102,6 +150,12 @@ const ReportDetails: React.FC = () => {
     try {
       const currentIssue = selectedIssues[activeIssueIndex];
       
+      // Save form data for this issue
+      setSavedForms(prev => ({
+        ...prev,
+        [currentIssue.id]: values
+      }));
+      
       // Save issue details to Supabase
       const { data: reportData, error: reportError } = await supabase
         .from('issue_reports')
@@ -114,7 +168,7 @@ const ReportDetails: React.FC = () => {
           involved_parties: values.who,
           description: values.what,
           evidence_description: values.evidenceDescription || null,
-          status: 'pending_review',
+          status: 'submitted',
           created_at: new Date().toISOString()
         })
         .select();
@@ -142,7 +196,13 @@ const ReportDetails: React.FC = () => {
       if (activeIssueIndex < selectedIssues.length - 1) {
         // Move to the next issue
         setActiveIssueIndex(activeIssueIndex + 1);
-        form.reset();
+        form.reset({
+          when: savedForms[selectedIssues[activeIssueIndex + 1]?.id]?.when || '',
+          where: savedForms[selectedIssues[activeIssueIndex + 1]?.id]?.where || '',
+          who: savedForms[selectedIssues[activeIssueIndex + 1]?.id]?.who || '',
+          what: savedForms[selectedIssues[activeIssueIndex + 1]?.id]?.what || '',
+          evidenceDescription: savedForms[selectedIssues[activeIssueIndex + 1]?.id]?.evidenceDescription || ''
+        });
       } else {
         // All issues reported, navigate to confirmation page
         toast({
@@ -173,7 +233,17 @@ const ReportDetails: React.FC = () => {
       <main className="flex-1 py-8 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="mb-6">
-            <h1 className="text-2xl font-bold">Report Details</h1>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={handleBackClick}
+                className="h-8 w-8"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+              <h1 className="text-2xl font-bold">Report Details</h1>
+            </div>
             <p className="text-muted-foreground mt-2">
               Please provide specific details about the incident(s) you experienced.
               {selectedIssues.length > 1 && ` (Issue ${activeIssueIndex + 1} of ${selectedIssues.length})`}
@@ -182,7 +252,19 @@ const ReportDetails: React.FC = () => {
           
           <Card>
             <CardHeader>
-              <CardTitle>{currentIssue.title}</CardTitle>
+              <div className="flex justify-between items-center">
+                <CardTitle>{currentIssue.title}</CardTitle>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleSaveForm}
+                  disabled={isSaving || !form.formState.isDirty}
+                  className="flex items-center gap-1"
+                >
+                  <Save className="h-4 w-4" />
+                  Save Progress
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
               <Form {...form}>
@@ -329,7 +411,7 @@ const ReportDetails: React.FC = () => {
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={() => navigate('/report-issue')}
+                      onClick={handleBackClick}
                     >
                       Back
                     </Button>
@@ -352,6 +434,22 @@ const ReportDetails: React.FC = () => {
           </Card>
         </div>
       </main>
+
+      <AlertDialog open={showExitAlert} onOpenChange={setShowExitAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Unsaved Changes</AlertDialogTitle>
+            <AlertDialogDescription>
+              You have unsaved changes. Would you like to save your progress before leaving?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleSaveForm}>Save Progress</AlertDialogAction>
+            <AlertDialogAction onClick={() => navigate('/report-issue')}>Leave Without Saving</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

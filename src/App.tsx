@@ -13,6 +13,7 @@ import Chat from "./pages/Chat";
 import ReportIssue from "./pages/ReportIssue";
 import ReportDetails from "./pages/ReportDetails";
 import ReportConfirmation from "./pages/ReportConfirmation";
+import MyReports from "./pages/MyReports";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const AppRoutes = () => (
       <Route path="/report-issue" element={<ReportIssue />} />
       <Route path="/report-details" element={<ReportDetails />} />
       <Route path="/report-confirmation" element={<ReportConfirmation />} />
+      <Route path="/my-reports" element={<MyReports />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>

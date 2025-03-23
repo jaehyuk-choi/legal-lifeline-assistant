@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAuth } from '@/context/AuthContext';
+import { ArrowLeft } from 'lucide-react';
 
 interface IssueOption {
   id: string;
@@ -117,7 +118,17 @@ const ReportIssue: React.FC = () => {
       
       <main className="flex-1 flex flex-col max-w-3xl mx-auto w-full p-4">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold">Report a Workplace Issue</h1>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => navigate(-1)}
+              className="h-8 w-8"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+            <h1 className="text-2xl font-bold">Report a Workplace Issue</h1>
+          </div>
           <p className="text-muted-foreground mt-2">
             Select the issues you've experienced at your workplace. In the next step, we'll ask for more details.
           </p>

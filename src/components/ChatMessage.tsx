@@ -43,7 +43,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           "text-xs mt-1",
           isUser ? "text-primary-foreground/80" : "text-muted-foreground"
         )}>
-          {new Intl.DateTimeFormat('ko-KR', {
+          {new Intl.DateTimeFormat('en-US', {
             hour: '2-digit',
             minute: '2-digit',
           }).format(message.timestamp)}

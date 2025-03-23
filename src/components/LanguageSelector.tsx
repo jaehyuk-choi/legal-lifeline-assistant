@@ -14,8 +14,8 @@ const languages = [
   { code: 'en', name: 'English' },
   { code: 'es', name: 'Español' },
   { code: 'fr', name: 'Français' },
-  { code: 'zh', name: '中文' },
-  { code: 'ko', name: '한국어' },
+  { code: 'zh', name: 'Chinese' },
+  { code: 'ko', name: 'Korean' },
 ];
 
 interface LanguageSelectorProps {

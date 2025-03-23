@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 import BackgroundGradient from '@/components/BackgroundGradient';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, FileText, Phone } from 'lucide-react';
+import { ArrowLeft, Check, FileText, Phone, Building, ExternalLink } from 'lucide-react';
 
 interface Lawyer {
   id: string;
@@ -18,12 +18,22 @@ interface Lawyer {
   contact: string;
 }
 
+interface NGO {
+  id: string;
+  name: string;
+  focus: string;
+  description: string;
+  contact: string;
+  website: string;
+}
+
 const ReportConfirmation: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [isLegalViolation, setIsLegalViolation] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [lawyers, setLawyers] = useState<Lawyer[]>([]);
+  const [ngos, setNgos] = useState<NGO[]>([]);
 
   useEffect(() => {
     if (!user) {
@@ -70,6 +80,34 @@ const ReportConfirmation: React.FC = () => {
               contact: 'lisa@workersrights.org'
             }
           ]);
+        } else {
+          // Mock NGO data for cases with lower violation probability
+          setNgos([
+            {
+              id: '1',
+              name: 'Workers Rights Center',
+              focus: 'Workplace Education, Know Your Rights',
+              description: 'Provides free information about workplace rights and educational workshops for vulnerable workers.',
+              contact: 'info@workersrightscenter.org',
+              website: 'https://www.workersrightscenter.org'
+            },
+            {
+              id: '2',
+              name: 'Community Legal Support',
+              focus: 'Legal Clinics, Documentation Assistance',
+              description: 'Offers free legal clinics and help with documentation for workers in vulnerable situations.',
+              contact: 'help@communitylegal.org',
+              website: 'https://www.communitylegal.org'
+            },
+            {
+              id: '3',
+              name: 'Labor Justice Coalition',
+              focus: 'Advocacy, Community Support',
+              description: 'Community-based organization that advocates for better working conditions and provides peer support.',
+              contact: 'connect@laborjustice.org',
+              website: 'https://www.laborjustice.org'
+            }
+          ]);
         }
         
         setIsLoading(false);
@@ -87,9 +125,9 @@ const ReportConfirmation: React.FC = () => {
     alert('In a real implementation, this would download your report PDF');
   };
 
-  const handleContactLawyer = (lawyer: Lawyer) => {
-    // In a real implementation, this would initiate contact with the lawyer
-    alert(`In a real implementation, this would connect you with ${lawyer.name}`);
+  const handleContactHelper = (contact: string) => {
+    // In a real implementation, this would initiate contact with the helper
+    alert(`In a real implementation, this would connect you with ${contact}`);
   };
 
   if (isLoading) {
@@ -123,6 +161,17 @@ const ReportConfirmation: React.FC = () => {
       
       <main className="flex-1 py-8 px-4">
         <div className="max-w-3xl mx-auto">
+          <div className="mb-4">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => navigate(-1)}
+              className="h-8 w-8"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </div>
+          
           <Card className="mb-6">
             <CardHeader>
               <div className="flex items-center gap-2">
@@ -155,7 +204,7 @@ const ReportConfirmation: React.FC = () => {
                   <h3 className="font-semibold text-blue-800 mb-2">Report Under Review</h3>
                   <p className="text-blue-700">
                     Based on our initial analysis, we need more information to determine if there's a legal violation. 
-                    An advisor will review your case and contact you soon.
+                    We've connected you with support organizations that can help meanwhile.
                   </p>
                 </div>
               )}
@@ -170,11 +219,16 @@ const ReportConfirmation: React.FC = () => {
                   <Phone className="h-4 w-4" />
                   Speak with an AI Advisor
                 </Button>
+                
+                <Button variant="outline" onClick={() => navigate('/my-reports')} className="flex items-center gap-2">
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to My Reports
+                </Button>
               </div>
             </CardContent>
           </Card>
           
-          {isLegalViolation && (
+          {isLegalViolation ? (
             <div>
               <h2 className="text-xl font-bold mb-4">Recommended Legal Advisors</h2>
               <p className="text-muted-foreground mb-6">
@@ -205,10 +259,55 @@ const ReportConfirmation: React.FC = () => {
                     <CardFooter>
                       <Button 
                         variant="outline" 
-                        onClick={() => handleContactLawyer(lawyer)} 
+                        onClick={() => handleContactHelper(lawyer.contact)} 
                         className="w-full"
                       >
                         Contact
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h2 className="text-xl font-bold mb-4">Support Organizations</h2>
+              <p className="text-muted-foreground mb-6">
+                These organizations can provide information, education, and support for your situation.
+                All services are free and confidential.
+              </p>
+              
+              <div className="grid md:grid-cols-3 gap-4">
+                {ngos.map(ngo => (
+                  <Card key={ngo.id}>
+                    <CardHeader>
+                      <CardTitle className="text-lg">{ngo.name}</CardTitle>
+                      <CardDescription>{ngo.focus}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm">{ngo.description}</p>
+                      <div className="flex items-center mt-2">
+                        <Building className="h-4 w-4 text-primary mr-1" />
+                        <span className="text-sm text-muted-foreground">Non-profit organization</span>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex gap-2">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => handleContactHelper(ngo.contact)} 
+                        className="w-full"
+                      >
+                        Contact
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        asChild
+                      >
+                        <a href={ngo.website} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1">
+                          <ExternalLink className="h-4 w-4" />
+                          <span>Website</span>
+                        </a>
                       </Button>
                     </CardFooter>
                   </Card>
