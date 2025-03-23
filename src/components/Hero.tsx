@@ -29,20 +29,23 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-up">
             {t('hero.subtitle')}
           </p>
+        </div>
+      </div>
+
+      {/* Button moved outside of background div for better clickability */}
+      <div className="container mx-auto container-padding relative z-10">
+        <div className="flex flex-col items-center justify-center gap-6 animate-fade-up">
+          <Button 
+            size="lg" 
+            variant="green" 
+            onClick={() => navigate('/how-to-use')}
+            className="w-full md:w-auto"
+          >
+            {t('button.learnHow')}
+          </Button>
           
-          <div className="flex flex-col items-center justify-center gap-6 animate-fade-up">
-            <Button 
-              size="lg" 
-              variant="green" 
-              onClick={() => navigate('/how-to-use')}
-              className="w-full md:w-auto"
-            >
-              {t('button.learnHow')}
-            </Button>
-            
-            <div className="text-center text-sm text-muted-foreground mt-4">
-              <p>{t('cta.choose')}</p>
-            </div>
+          <div className="text-center text-sm text-muted-foreground mt-4">
+            <p>{t('cta.choose')}</p>
           </div>
         </div>
       </div>
