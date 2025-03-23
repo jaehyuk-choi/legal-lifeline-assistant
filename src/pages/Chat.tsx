@@ -12,7 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
 
-// Custom message type for our chat
+// Custom type for my chat messages
 type Message = {
   id: string;
   role: 'user' | 'assistant';
@@ -31,7 +31,7 @@ const Chat = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // Set initial welcome message when chat loads
+    // Start with a friendly welcome message
     const welcomeMessage: Message = {
       id: 'welcome',
       role: 'assistant',
@@ -41,7 +41,7 @@ const Chat = () => {
     
     setMessages([welcomeMessage]);
     
-    // Check if we came from the call page with a summary
+    // Check if we've got a summary from the call page
     const summaryFromState = location.state?.summary;
     if (summaryFromState) {
       // Add the call summary as a message from the assistant
@@ -53,7 +53,7 @@ const Chat = () => {
       };
       setMessages(prev => [...prev, summaryMessage]);
     } else {
-      // Try sessionStorage as a fallback method
+      // Try sessionStorage as a fallback - had to add this for when users navigate directly
       const storedSummary = sessionStorage.getItem('callSummary');
       if (storedSummary) {
         const summaryMessage: Message = {
@@ -63,13 +63,13 @@ const Chat = () => {
           timestamp: new Date(),
         };
         setMessages(prev => [...prev, summaryMessage]);
-        // Clean up after using the summary
+        // Clean up after using it - don't want it hanging around
         sessionStorage.removeItem('callSummary');
       }
     }
   }, [location]);
   
-  // Auto-scroll to bottom when new messages arrive
+  // Auto-scroll to bottom when new messages come in
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -77,7 +77,7 @@ const Chat = () => {
   const handleSendMessage = async () => {
     if (!message.trim()) return;
     
-    // Add user message to the chat
+    // Add the user's message to the chat
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
@@ -102,7 +102,7 @@ const Chat = () => {
         content: message
       });
 
-      // Call our Supabase Edge Function for LLM response
+      // Call my Supabase Edge Function to get the LLM response
       const { data, error } = await supabase.functions.invoke('chat-llm', {
         body: {
           message,
@@ -112,20 +112,20 @@ const Chat = () => {
 
       if (error) throw error;
 
-      // Add the AI's response to chat
+      // Add the AI's response to the chat
       const assistantMessage: Message = {
         id: Date.now().toString(),
         role: 'assistant',
-        content: data?.response || "I'm having trouble processing your request right now.",
+        content: data?.response || "Sorry, I'm having trouble processing your request right now.",
         timestamp: new Date(),
       };
       
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Message sending failed:', error);
       toast({
         title: "Error",
-        description: "Failed to get a response. Please try again.",
+        description: "Couldn't get a response. Try again?",
         variant: "destructive",
       });
     } finally {

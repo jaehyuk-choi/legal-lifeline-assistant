@@ -32,10 +32,11 @@ const Call = () => {
     initiateCall();
     
     // Mock call status changes for testing
+    // In production this would hook into the actual call API
     const connectingTimeout = setTimeout(() => {
       setCallStatus('active');
       
-      // Start call timer
+      // Start my call timer
       const timer = setInterval(() => {
         setCallDuration(prev => prev + 1);
       }, 1000);
@@ -50,7 +51,7 @@ const Call = () => {
     setIsLoading(true);
     
     try {
-      // Call our edge function that connects to Twilio
+      // Call my edge function that connects to Twilio
       const { data, error } = await supabase.functions.invoke('twilio-call', {
         body: {
           source: 'call-page',
@@ -64,13 +65,13 @@ const Call = () => {
       
       toast({
         title: "Call Initiated",
-        description: "You will be connected to a legal assistant shortly.",
+        description: "You'll be connected to a legal assistant soon.",
       });
     } catch (error) {
-      console.error('Error initiating call:', error);
+      console.error('Call initiation failed:', error);
       toast({
         title: "Error",
-        description: "Failed to initiate call. Please try again.",
+        description: "Couldn't start the call. Try again?",
         variant: "destructive",
       });
     } finally {
@@ -87,23 +88,23 @@ const Call = () => {
     setIsLoading(true);
     
     try {
-      // In a real application, this would call an edge function to get a real summary
-      // For now we're just simulating a delay and returning a mock summary
+      // In a real app, this would call an edge function for a real summary
+      // Just simulating it for now with a timeout and mock data
       setTimeout(() => {
         const summary = "Your call with our legal assistant has been summarized. The main topics discussed were workplace safety concerns and potential violations of labor regulations. We recommend documenting the issues you mentioned and considering filing a formal complaint with your local labor department.";
         setCallSummary(summary);
         setShowSummary(true);
         setIsLoading(false);
         
-        // Store the summary in sessionStorage to ensure it's available for other pages
+        // Store the summary in sessionStorage so other pages can use it
         sessionStorage.setItem('callSummary', summary);
       }, 2000);
     } catch (error) {
-      console.error('Error generating summary:', error);
+      console.error('Summary generation failed:', error);
       setIsLoading(false);
       toast({
         title: "Error",
-        description: "Failed to generate call summary. Please try again.",
+        description: "Couldn't generate your call summary. Try again?",
         variant: "destructive",
       });
     }
@@ -116,14 +117,14 @@ const Call = () => {
   };
 
   const handleCreateReport = () => {
-    // Ensure the summary is stored in sessionStorage before navigating
+    // Make sure the summary is saved before navigating
     if (callSummary) {
       sessionStorage.setItem('callSummary', callSummary);
       navigate('/report-confirmation', { state: { summary: callSummary } });
     } else {
       toast({
         title: "Error",
-        description: "No call summary available. Please try again.",
+        description: "No summary available. Try again?",
         variant: "destructive",
       });
     }
@@ -158,7 +159,7 @@ const Call = () => {
                 <div className="animate-pulse rounded-full bg-primary/20 p-8">
                   <Phone className="h-12 w-12 text-primary animate-bounce" />
                 </div>
-                <p className="text-lg">Please wait while we connect your call...</p>
+                <p className="text-lg">Hang tight while we connect your call...</p>
               </div>
             )}
             
@@ -167,7 +168,7 @@ const Call = () => {
                 <div className="rounded-full bg-green-100 p-8">
                   <Phone className="h-12 w-12 text-green-600" />
                 </div>
-                <p className="text-lg">You are connected with our legal assistant</p>
+                <p className="text-lg">You're connected with our legal assistant</p>
                 <p className="text-xl font-mono">{formatTime(callDuration)}</p>
               </div>
             )}
@@ -178,7 +179,7 @@ const Call = () => {
                   <Phone className="h-12 w-12 text-gray-600" />
                 </div>
                 <p className="text-lg">Your call has ended</p>
-                <p className="text-gray-500">Generating call summary...</p>
+                <p className="text-gray-500">Generating your call summary...</p>
                 <div className="flex items-center justify-center">
                   <div className="dot-flashing"></div>
                 </div>

@@ -41,7 +41,7 @@ const categoryTranslations = {
     },
     hi: {
       title: 'वेतन चोरी',
-      description: 'पूर्ण भुगतान न मिलना, अवैतनिक ओवरटाइム, या घड़ी के बाहर काम करना'
+      description: 'पूर्ण भुगतान न मिलना, अवैतनिक ओवरटाइ्म, या घड़ी के बाहर काम करना'
     }
   },
   'unsafeConditions': {
@@ -350,25 +350,26 @@ const uiTranslations = {
   }
 };
 
+// Updated part with personal comments:
 const ReportIssue: React.FC = () => {
   const { toast } = useToast();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsLoading] = useState(false);
   const { language } = useLanguage();
 
-  // Helper function to get translated UI text
+  // Helper to get translated text - made this to keep the JSX clean
   const getUiText = (key: string): string => {
     if (uiTranslations[key] && uiTranslations[key][language]) {
       return uiTranslations[key][language];
     }
-    // Fallback to English if translation not found
+    // Fall back to English if we don't have a translation
     return uiTranslations[key]?.en || key;
   };
 
-  // Define issue options with translations
+  // Get issue options with proper translations
   const getIssueOptions = (): IssueOption[] => {
     return [
       {
@@ -422,6 +423,7 @@ const ReportIssue: React.FC = () => {
   const issues = getIssueOptions();
 
   const handleIssueToggle = (issueId: string) => {
+    // Toggle logic to add/remove issues from selection
     setSelectedIssues(prev => 
       prev.includes(issueId) 
         ? prev.filter(id => id !== issueId)
@@ -439,13 +441,14 @@ const ReportIssue: React.FC = () => {
       return;
     }
 
-    setIsSubmitting(true);
+    setIsLoading(true);
     
     try {
-      // In a real implementation, we would save the selected issues to the database
+      // In a real version, we'd save this to a database
+      // Just using a timeout for now to simulate an API call
       await new Promise(resolve => setTimeout(resolve, 500));
       
-      // Navigate to the detailed report form with the selected issues and anonymity preference
+      // Navigate to the details form with all our selected issues
       navigate('/report-details', { 
         state: { 
           selectedIssues: selectedIssues.map(id => issues.find(issue => issue.id === id)),
@@ -455,10 +458,10 @@ const ReportIssue: React.FC = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to submit the report. Please try again.",
+        description: "Couldn't submit your report. Try again?",
         variant: "destructive"
       });
-      setIsSubmitting(false);
+      setIsLoading(false);
     }
   };
 

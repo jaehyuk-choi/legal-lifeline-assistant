@@ -14,14 +14,14 @@ const ReportConfirmation = () => {
   const [callSummary, setCallSummary] = useState<string>('');
   
   useEffect(() => {
-    // First try to get the summary from router state - this is cleaner
+    // First try to get the summary from router state - way cleaner this way
     const summaryFromState = location.state?.summary;
     
     if (summaryFromState) {
       setCallSummary(summaryFromState);
     } else {
       // Fallback to sessionStorage if not in router state
-      // This happens if user navigates directly to this page
+      // This happens if user refreshes or navigates directly - had to add this workaround
       const storedSummary = sessionStorage.getItem('callSummary');
       if (storedSummary) {
         setCallSummary(storedSummary);
@@ -35,7 +35,7 @@ const ReportConfirmation = () => {
   };
   
   const handleViewReports = () => {
-    // Navigate to reports list instead
+    // Let's go see their reports instead
     navigate('/my-reports');
   };
 

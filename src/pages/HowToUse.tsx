@@ -9,6 +9,7 @@ const HowToUse = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
 
+  // Made these steps nice and clear - might add more detail later
   const methods = [
     {
       icon: <PhoneCall className="h-10 w-10 text-[#6a994e]" />,

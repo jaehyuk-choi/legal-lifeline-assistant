@@ -28,7 +28,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const { signIn, user } = useAuth();
 
-  // Redirect if already logged in
+  // Redirect if already logged in - no need to sign in again
   useEffect(() => {
     if (user) {
       navigate('/');
@@ -50,7 +50,7 @@ const SignIn = () => {
       await signIn(values.email, values.password);
       navigate("/");
     } catch (error) {
-      console.error("Sign in error:", error);
+      console.error("Sign in failed:", error);
     } finally {
       setIsLoading(false);
     }
