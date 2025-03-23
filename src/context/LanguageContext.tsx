@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Define available languages
@@ -149,7 +150,7 @@ const translations: Translations = {
     fr: 'Ce rapport n\'est pas un avis juridique, mais la première étape pour comprendre votre situation. La conversation ultérieure sera menée par chat ou consultation téléphonique.',
     zh: '此报告不是法律建议，而是了解您情况的第一步。进一步的对话将通过聊天或电话咨询进行。',
     ko: '이 보고서는 법률 조언이 아니라 귀하의 상황을 이해하는 첫 번째 단계입니다. 추가 대화는 채팅이나 전화 상담을 통해 진행됩니다.',
-    hi: 'यह रिपोर्ट कानूनी सलाह नहीं है, बल्कि आपकी स्थिति को समझने का पहला कदम है। अगले चरण में, हम आपसे अधिक विवरण पूछेंगे।',
+    hi: 'यह रिपोर्ट कानूनी सलाह नहीं है, बल्कि आपकी स्थिति को समझने का पहला कदम है। आगे की बातचीत चैट या फोन परामर्श के माध्यम से की जाएगी।',
   },
   'reportIssue.anonymous': {
     en: 'Make this report anonymous',
@@ -270,7 +271,7 @@ const translations: Translations = {
     es: 'Suba fotos, documentos u otras pruebas relacionadas con este incidente',
     fr: 'Téléchargez des photos, des documents ou d\'autres preuves liées à cet incident',
     zh: '上传与此事件相关的照片、文件或其他证据',
-    ko: '이 사건과 관련된 사진、文档 또는 기타 증거를 업로드하세요',
+    ko: '이 사건과 관련된 사진, 문서 또는 기타 증거를 업로드하세요',
     hi: 'इस घटना से संबंधित फोटो, दस्तावेज़, या अन्य सबूत अपलोड करें',
   },
   'reportDetails.selectedFiles': {
@@ -345,6 +346,7 @@ const translations: Translations = {
     ko: '취소',
     hi: 'रद्द करें',
   },
+  // Removed duplicate 'reportDetails.saveProgress'
   'reportDetails.leaveWithoutSaving': {
     en: 'Leave Without Saving',
     es: 'Salir Sin Guardar',
@@ -458,7 +460,7 @@ const translations: Translations = {
     es: 'Reciba información clara sobre sus derechos y orientación práctica sobre los próximos pasos a seguir.',
     fr: 'Recevez des informations claires sur vos droits et des conseils pratiques sur les prochaines étapes à suivre.',
     zh: '获取关于您权利的清晰信息以及关于下一步行动的实用指导。',
-    ko: '귀하의 권리에 대한 명확한 정보와 다음 단계에 대한 실用的な 지침을 받으세요.',
+    ko: '귀하의 권리에 대한 명확한 정보와 다음 단계에 대한 실용적인 지침을 받으세요.',
     hi: 'अपने अधिकारों के बारे में स्पष्ट जानकारी और अगले कदमों पर व्यावहारिक मार्गदर्शन प्राप्त करें।',
   },
   'step4.title': {
@@ -541,7 +543,7 @@ const translations: Translations = {
     es: 'Sí, nuestro servicio de asistencia legal es completamente gratuito. Está diseñado para ayudar a los trabajadores inmigrantes a comprender sus derechos y navegar por las violaciones de las leyes laborales sin ninguna carga financiera.',
     fr: 'Oui, notre service d\'assistance juridique est entièrement gratuit. Il est conçu pour aider les travailleurs immigrés à comprendre leurs droits et à naviguer dans les violations du droit du travail sans aucune charge financière.',
     zh: '是的，我们的法律援助服务完全免费使用。它旨在帮助移民工人了解他们的权利并应对劳动法违规，而不会带来任何经济负担。',
-    ko: '네, 저희 법률 지원 서비스는 완전히 무료로 이용하실 수 있습니다. 이는 이민 노동자들이 경제적 부담 없이 자신의 권리와 혜택을 이해하고 노동법 위반 사항을 처리할 수 있도록 설계되었습니다.',
+    ko: '네, 저희 법률 지원 서비스는 완전히 무료로 이용하실 수 있습니다. 이는 이민 노동자들이 경제적 부담 없이 자신의 권리를 이해하고 노동법 위반 사항을 처리할 수 있도록 설계되었습니다.',
     hi: 'हां, हमारी कानूनी सहायता सेवा पूरी तरह से मुफ्त है। यह प्रवासी श्रमिकों को बिना किसी वित्तीय बोझ के अपने अधिकारों को समझने और श्रम कानून उल्लंघनों का सामना करने में मदद करने के लिए डिज़ाइन की गई है।',
   },
   'faq.q2': {
@@ -574,7 +576,7 @@ const translations: Translations = {
     fr: 'Absolument. Nous prenons votre vie privée très au sérieux. Toutes les conversations sont confidentielles, et les informations personnelles ne sont jamais partagées avec des tiers sans votre consentement explicite.',
     zh: '当然。我们非常重视您的隐私。所有对话都是保密的，未经您的明确同意，个人信息绝不会与第三方共享。',
     ko: '물론입니다. 저희는 귀하의 개인 정보를 매우 중요하게 생각합니다. 모든 대화는 기밀이며, 귀하의 명시적 동의 없이는 개인 정보가 제3자와 공유되지 않습니다.',
-    hi: 'बिल्कुल। हम आपकी गोपनीयता को बहुत ���ंभीरता से लेते हैं। सभी बातचीत गोपनीय हैं, और व्यक्तिगत जानकारी आपकी स्पष्ट सहमति के बिना कभी भी तीसरे पक्ष के साथ साझा नहीं की जाती है।',
+    hi: 'बिल्कुल। हम आपकी गोपनीयता को बहुत गंभीरता से लेते हैं। सभी बातचीत गोपनीय हैं, और व्यक्तिगत जानकारी आपकी स्पष्ट सहमति के बिना कभी भी तीसरे पक्ष के साथ साझा नहीं की जाती है।',
   },
   'faq.q4': {
     en: 'What types of labor issues can this help with?',
@@ -605,36 +607,115 @@ const translations: Translations = {
     es: 'No, nuestro servicio está disponible para todos los trabajadores independientemente de su estado migratorio. No preguntamos ni requerimos ninguna documentación para brindar asistencia.',
     fr: 'Non, notre service est disponible pour tous les travailleurs, quel que soit leur statut d\'immigration. Nous ne demandons ni n\'exigeons aucune documentation pour fournir une assistance.',
     zh: '不，我们的服务适用于所有工人，无论其移民身份如何。我们不会询问或要求任何文件来提供帮助。',
-    ko: '아니요, 저희 서비스는 이민 신분과 관계없이 모든 근로자가 이용할 수 있습니다. 저희는 도움을 제공하기 위해 어떤 서류도 요구하거나 필요로 하지 않습니다.',
-    hi: 'नहीं, हमारी सेवा आप्रवासन स्थिति की परवाह किए बिना सभी कार्यकर्ताओं के लिए उपलब्ध है। हम सहायता प्रदान करने के लिए किसी भी दस्तावेज़ के बारे में पूछते या आवश्यक नहीं करते हैं।',
+    ko: '아니요, 저희 서비스는 이민 신분과 관계없이 모든 근로자가 이용할 수 있습니다. 저희는 도움을 제공하기 위해 어떤 서류도 묻거나 요구하지 않습니다.',
+    hi: 'नहीं, हमारी सेवा आव्रजन स्थिति की परवाह किए बिना सभी श्रमिकों के लिए उपलब्ध है। हम सहायता प्रदान करने के लिए किसी भी दस्तावेज़ के बारे में नहीं पूछते या आवश्यक नहीं करते हैं।',
+  },
+  'faq.q6': {
+    en: 'Will this connect me with a human lawyer?',
+    es: '¿Esto me conectará con un abogado humano?',
+    fr: 'Est-ce que cela me mettra en contact avec un avocat humain?',
+    zh: '这会将我与人类律师联系起来吗？',
+    ko: '이것이 저를 인간 변호사와 연결해 줄까요?',
+    hi: 'क्या यह मुझे एक मानव वकील से जोड़ेगा?',
+  },
+  'faq.a6': {
+    en: 'This service provides AI-powered legal information and guidance. While it doesn\'t connect you directly with a human lawyer, it can help you understand when you might need one and can provide referrals to legal aid organizations.',
+    es: 'Este servicio proporciona información y orientación legal impulsada por IA. Si bien no lo conecta directamente con un abogado humano, puede ayudarlo a comprender cuándo podría necesitar uno y puede proporcionarle referencias a organizaciones de asistencia legal.',
+    fr: 'Ce service fournit des informations et des conseils juridiques alimentés par l\'IA. Bien qu\'il ne vous connecte pas directement avec un avocat humain, il peut vous aider à comprendre quand vous pourriez en avoir besoin et peut fournir des références à des organisations d\'aide juridique.',
+    zh: '该服务提供由AI驱动的法律信息和指导。虽然它不会直接将您与人类律师联系起来，但它可以帮助您了解何时可能需要律师，并可以提供法律援助组织的转介。',
+    ko: '이 서비스는 AI 기반 법률 정보와 지침을 제공합니다. 직접적으로 인간 변호사와 연결되지는 않지만, 언제 변호사가 필요할 수 있는지 이해하는 데 도움을 주고 법률 지원 기관을 추천해 드릴 수 있습니다.',
+    hi: 'यह सेवा AI-संचालित कानूनी जानकारी और मार्गदर्शन प्रदान करती है। हालांकि यह आपको सीधे मानव वकील से नहीं जोड़ती है, यह आपको यह समझने में मदद कर सकती है कि आपको कब एक की आवश्यकता हो सकती है और कानूनी सहायता संगठनों के लिए रेफरल प्रदान कर सकती है।',
+  },
+  'legal.disclaimer': {
+    en: 'Legal Disclaimer',
+    es: 'Aviso Legal',
+    fr: 'Avis Juridique',
+    zh: '法律免责声明',
+    ko: '법적 고지사항',
+    hi: 'कानूनी अस्वीकरण',
+  },
+  'legal.disclaimer.text1': {
+    en: 'This service provides general legal information and guidance but does not constitute legal advice. The information provided is not a substitute for consultation with a qualified attorney.',
+    es: 'Este servicio proporciona información y orientación legal general, pero no constituye asesoramiento legal. La información proporcionada no sustituye la consulta con un abogado cualificado.',
+    fr: 'Ce service fournit des informations et des conseils juridiques généraux mais ne constitue pas un avis juridique. Les informations fournies ne remplacent pas la consultation d\'un avocat qualifié.',
+    zh: '本服务提供一般法律信息和指导，但不构成法律建议。所提供的信息不能替代与合格律师的咨询。',
+    ko: '이 서비스는 일반적인 법률 정보와 지침을 제공하지만, 법률 조언을 구성하지는 않습니다. 제공된 정보는 자격을 갖춘 변호사와의 상담을 대체할 수 없습니다.',
+    hi: 'यह सेवा सामान्य कानूनी जानकारी और मार्गदर्शन प्रदान करती है लेकिन कानूनी सलाह नहीं है। प्रदान की गई जानकारी योग्य वकील के साथ परामर्श का विकल्प नहीं है।',
+  },
+  'legal.disclaimer.text2': {
+    en: 'Our AI assistant is designed to help you understand your rights and options, but specific legal situations may require professional legal counsel. If you need specific legal advice, please consult with a qualified attorney or legal aid organization.',
+    es: 'Nuestro asistente de IA está diseñado para ayudarlo a comprender sus derechos y opciones, pero situaciones legales específicas pueden requerir asesoramiento legal profesional. Si necesita asesoramiento legal específico, consulte con un abogado cualificado o una organización de asistencia legal.',
+    fr: 'Notre assistant IA est conçu pour vous aider à comprendre vos droits et options, mais des situations juridiques spécifiques peuvent nécessiter un conseiller juridique professionnel. Si vous avez besoin de conseils juridiques spécifiques, veuillez consulter un avocat qualifié ou une organisation d\'aide juridique.',
+    zh: '我们的AI助手旨在帮助您了解您的权利和选择，但特定的法律情况可能需要专业的法律顾问。如果您需要具体的法律建议，请咨询合格的律师或法律援助组织。',
+    ko: '저희 AI 도우미는 귀하의 권리와 선택지를 이해하는 데 도움을 주기 위해 설계되었지만, 특정 법적 상황은 전문적인 법률 자문이 필요할 수 있습니다. 특정 법률 조언이 필요하시면, 자격을 갖춘 변호사나 법률 지원 기관에 문의하시기 바랍니다.',
+    hi: 'हमारा AI सहायक आपको अपने अधिकारों और विकल्पों को समझने में मदद करने के लिए डिज़ाइन किया गया है, लेकिन विशिष्ट कानूनी स्थितियों के लिए पेशेवर कानूनी सलाह की आवश्यकता हो सकती है। यदि आपको विशिष्ट कानूनी सलाह की आवश्यकता है, तो कृपया एक योग्य वकील या कानूनी सहायता संगठन से परामर्श करें।',
+  },
+  'footer.privacy': {
+    en: 'Privacy Policy',
+    es: 'Política de Privacidad',
+    fr: 'Politique de Confidentialité',
+    zh: '隐私政策',
+    ko: '개인정보 처리방침',
+    hi: 'गोपनीयता नीति',
+  },
+  'footer.terms': {
+    en: 'Terms of Service',
+    es: 'Términos de Servicio',
+    fr: 'Conditions d\'Utilisation',
+    zh: '服务条款',
+    ko: '서비스 약관',
+    hi: 'सेवा की शर्तें',
+  },
+  'footer.contact': {
+    en: 'Contact',
+    es: 'Contacto',
+    fr: 'Contact',
+    zh: '联系',
+    ko: '연락처',
+    hi: 'संपर्क',
+  },
+  // Add more translations as needed
+  // Added missing translation for saveProgress
+  'reportDetails.saveProgress': {
+    en: 'Save Progress',
+    es: 'Guardar Progreso',
+    fr: 'Sauvegarder la Progression',
+    zh: '保存进度',
+    ko: '진행 상황 저장',
+    hi: 'प्रगति सहेजें',
   },
 };
 
-// Define context interface
 interface LanguageContextType {
   language: LanguageCode;
-  setLanguage: (language: LanguageCode) => void;
+  currentLanguage: LanguageCode; // Add this property
+  setLanguage: (lang: LanguageCode) => void;
   t: (key: string) => string;
 }
 
-// Create context
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType>({
+  language: 'en',
+  currentLanguage: 'en', // Add this property
+  setLanguage: () => {},
+  t: (key: string) => key,
+});
 
-// Provider component
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const useLanguage = () => useContext(LanguageContext);
+
+export const LanguageProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
   const [language, setLanguage] = useState<LanguageCode>('en');
 
-  // Load saved language preference on mount
+  // Load language preference from localStorage if available
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('preferredLanguage') as LanguageCode;
-    if (savedLanguage && Object.keys(translations['hero.title']).includes(savedLanguage)) {
+    const savedLanguage = localStorage.getItem('language') as LanguageCode;
+    if (savedLanguage && ['en', 'es', 'fr', 'zh', 'ko', 'hi'].includes(savedLanguage)) {
       setLanguage(savedLanguage);
     }
   }, []);
 
-  // Save language preference when it changes
+  // Save language preference to localStorage
   useEffect(() => {
-    localStorage.setItem('preferredLanguage', language);
+    localStorage.setItem('language', language);
   }, [language]);
 
   // Translation function
@@ -643,21 +724,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       console.warn(`Translation key not found: ${key}`);
       return key;
     }
-    return translations[key][language] || translations[key]['en'] || key;
+    return translations[key][language] || translations[key]['en'];
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ 
+      language, 
+      currentLanguage: language, // Add this property, which is an alias for language
+      setLanguage, 
+      t 
+    }}>
       {children}
     </LanguageContext.Provider>
   );
-};
-
-// Custom hook for using the language context
-export const useLanguage = (): LanguageContextType => {
-  const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
 };
