@@ -32,9 +32,9 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
         </div>
       </div>
 
-      {/* Button moved outside of background div for better clickability */}
+      {/* Button container */}
       <div className="container mx-auto container-padding relative z-10">
-        <div className="flex flex-col items-center justify-center gap-6 animate-fade-up">
+        <div className="flex justify-center animate-fade-up">
           <Button 
             size="lg" 
             variant="green" 
@@ -43,10 +43,6 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
           >
             {t('button.learnHow')}
           </Button>
-          
-          <div className="text-center text-sm text-muted-foreground mt-4">
-            <p>{t('cta.choose')}</p>
-          </div>
         </div>
       </div>
       
