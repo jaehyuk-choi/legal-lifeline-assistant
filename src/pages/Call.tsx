@@ -28,29 +28,32 @@ const Call = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [retries, setRetries] = useState(0);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const [callInitiated, setCallInitiated] = useState(false);
 
   // Start call when page loads
   useEffect(() => {
     initiateCall();
     
-    // Mock call status changes for testing
+    // This is a mock call for demo purposes
+    // In a real application, you would use the actual call status
     const connectingTimeout = setTimeout(() => {
-      setCallStatus('active');
-      
-      // Start call timer
-      const timer = setInterval(() => {
-        setCallDuration(prev => prev + 1);
-      }, 1000);
-      
-      setTimer(timer);
-      return () => clearInterval(timer);
-    }, 2000);
+      if (callInitiated) {
+        setCallStatus('active');
+        
+        // Start call timer
+        const timer = setInterval(() => {
+          setCallDuration(prev => prev + 1);
+        }, 1000);
+        
+        setTimer(timer);
+      }
+    }, 3000);
     
     return () => {
       clearTimeout(connectingTimeout);
       if (timer) clearInterval(timer);
     };
-  }, []);
+  }, [callInitiated]);
 
   const initiateCall = async () => {
     setIsLoading(true);
@@ -70,6 +73,7 @@ const Call = () => {
       }
       
       console.log('Call initiated response:', data);
+      setCallInitiated(true);
       
       toast({
         title: "Call Initiated",
