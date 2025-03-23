@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/context/LanguageContext';
+import { useNavigate } from 'react-router-dom';
 
 interface HeroProps {
   onInitiateCall: () => void;
@@ -11,6 +12,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
   const { t, language } = useLanguage();
+  const navigate = useNavigate();
   
   return (
     <section className={cn("pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden", className)}>
@@ -36,10 +38,10 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
             <Button 
               size="lg" 
               variant="outline" 
-              asChild 
+              onClick={() => navigate('/how-to-use')}
               className="mt-4"
             >
-              <a href="#how-it-works">{t('button.learnHow')}</a>
+              {t('button.learnHow')}
             </Button>
           </div>
         </div>
