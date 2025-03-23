@@ -4,12 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import BackgroundGradient from '@/components/BackgroundGradient';
+import { useAuth } from '@/context/AuthContext';
 
 // Form schema for validation
 const formSchema = z.object({
@@ -35,8 +35,8 @@ type FormValues = z.infer<typeof formSchema>;
 
 const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
   const navigate = useNavigate();
+  const { signUp } = useAuth();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -53,25 +53,10 @@ const SignUp = () => {
     setIsLoading(true);
     
     try {
-      // This would be replaced with your actual sign-up API call
-      console.log("Sign up values:", values);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Account created successfully",
-        description: "You can now sign in with your credentials.",
-      });
-      
+      await signUp(values.email, values.password, values.name);
       navigate("/sign-in");
     } catch (error) {
       console.error("Sign up error:", error);
-      toast({
-        variant: "destructive",
-        title: "Error creating account",
-        description: "There was a problem with your request. Please try again.",
-      });
     } finally {
       setIsLoading(false);
     }

@@ -4,11 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import BackgroundGradient from '@/components/BackgroundGradient';
+import { useAuth } from '@/context/AuthContext';
 
 // Form schema for validation
 const formSchema = z.object({
@@ -24,8 +24,8 @@ type FormValues = z.infer<typeof formSchema>;
 
 const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
   const navigate = useNavigate();
+  const { signIn } = useAuth();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -39,25 +39,10 @@ const SignIn = () => {
     setIsLoading(true);
     
     try {
-      // This would be replaced with your actual sign-in API call
-      console.log("Sign in values:", values);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Signed in successfully",
-        description: "Welcome back!",
-      });
-      
+      await signIn(values.email, values.password);
       navigate("/");
     } catch (error) {
       console.error("Sign in error:", error);
-      toast({
-        variant: "destructive",
-        title: "Authentication failed",
-        description: "Please check your email and password and try again.",
-      });
     } finally {
       setIsLoading(false);
     }
