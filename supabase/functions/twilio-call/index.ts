@@ -37,7 +37,7 @@ serve(async (req) => {
     // Create the auth string for Twilio API
     const auth = btoa(`${ACCOUNT_SID}:${AUTH_TOKEN}`);
     
-    // Use environment variable for webhook URL or fallback
+    // Use updated webhook URL
     const webhookUrl = Deno.env.get('TWILIO_WEBHOOK_URL') || 
                         "https://0c5e-148-252-133-83.ngrok-free.app/lang_select";
 
