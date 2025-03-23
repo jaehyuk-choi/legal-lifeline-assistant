@@ -28,8 +28,8 @@ serve(async (req) => {
     // Create the auth string for Twilio API
     const auth = btoa(`${ACCOUNT_SID}:${AUTH_TOKEN}`);
     
-    // Use the correct webhook URL
-    const webhookUrl = "http://localhost:5050/initiate_call";
+    // Use the updated webhook URL
+    const webhookUrl = "https://161e-66-207-202-144.ngrok-free.app/lang_select";
 
     console.log(`Using webhook URL: ${webhookUrl}`);
 
