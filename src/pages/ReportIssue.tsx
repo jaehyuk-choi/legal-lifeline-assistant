@@ -25,33 +25,43 @@ const ReportIssue: React.FC = () => {
   const issues: IssueOption[] = [
     {
       id: 'wage-theft',
-      title: '임금 체불',
-      description: '일한 만큼 급여를 받지 못했거나, 초과근무에 대한 급여를 받지 못했습니다.'
+      title: 'Wage Theft',
+      description: 'Not being paid for hours worked or overtime, or being paid less than minimum wage.'
     },
     {
       id: 'unsafe-conditions',
-      title: '안전하지 않은 근무 환경',
-      description: '작업 환경이 위험하거나 건강에 해롭습니다.'
+      title: 'Unsafe Working Conditions',
+      description: 'Working environment that is dangerous or harmful to health.'
     },
     {
       id: 'discrimination',
-      title: '차별 또는 괴롭힘',
-      description: '인종, 성별, 국적 등을 이유로 차별이나 괴롭힘을 당했습니다.'
+      title: 'Discrimination or Harassment',
+      description: 'Being treated unfairly or harassed due to race, gender, nationality, etc.'
     },
     {
       id: 'wrongful-termination',
-      title: '부당 해고',
-      description: '정당한 이유 없이 해고되었습니다.'
+      title: 'Wrongful Termination',
+      description: 'Being fired without proper cause or due process.'
     },
     {
       id: 'hour-violation',
-      title: '근무시간 위반',
-      description: '법적으로 허용된 시간 이상으로 일하게 되거나, 휴식 시간을 제공받지 못했습니다.'
+      title: 'Hour Violations',
+      description: 'Being forced to work more than legally allowed hours or not given breaks.'
     },
     {
       id: 'retaliation',
-      title: '보복 행위',
-      description: '권리를 주장하거나 불만을 제기한 후 불이익을 당했습니다.'
+      title: 'Retaliation',
+      description: 'Facing negative consequences after reporting issues or exercising your rights.'
+    },
+    {
+      id: 'benefits-denial',
+      title: 'Benefits Denial',
+      description: 'Being unfairly denied benefits you are entitled to, such as healthcare or paid leave.'
+    },
+    {
+      id: 'other',
+      title: 'Other Issues',
+      description: 'Any other workplace violations not listed above.'
     }
   ];
 
@@ -66,8 +76,8 @@ const ReportIssue: React.FC = () => {
   const handleSubmit = async () => {
     if (selectedIssues.length === 0) {
       toast({
-        title: "선택된 항목이 없습니다",
-        description: "최소 하나 이상의 문제를 선택해주세요.",
+        title: "No issues selected",
+        description: "Please select at least one issue to proceed.",
         variant: "destructive"
       });
       return;
@@ -76,23 +86,21 @@ const ReportIssue: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // 실제 구현 시에는 여기에 API 호출 코드가 들어갑니다
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // In a real implementation, we would save the selected issues to the database
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      toast({
-        title: "보고서가 제출되었습니다",
-        description: "귀하의 상황을 검토한 후 연락드리겠습니다.",
+      // Navigate to the detailed report form with the selected issues
+      navigate('/report-details', { 
+        state: { 
+          selectedIssues: selectedIssues.map(id => issues.find(issue => issue.id === id))
+        } 
       });
-      
-      // 제출 후 채팅 페이지로 이동
-      navigate('/chat');
     } catch (error) {
       toast({
-        title: "제출 실패",
-        description: "보고서 제출 중 오류가 발생했습니다. 다시 시도해주세요.",
+        title: "Submission Failed",
+        description: "There was an error submitting your report. Please try again.",
         variant: "destructive"
       });
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -104,9 +112,9 @@ const ReportIssue: React.FC = () => {
       
       <main className="flex-1 flex flex-col max-w-3xl mx-auto w-full p-4">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold">법적 문제 보고하기</h1>
+          <h1 className="text-2xl font-bold">Report a Workplace Issue</h1>
           <p className="text-muted-foreground mt-2">
-            귀하가 경험하고 있는 직장 내 문제를 선택해주세요. 다음 단계에서 더 자세한 내용을 물어볼 것입니다.
+            Select the issues you've experienced at your workplace. In the next step, we'll ask for more details.
           </p>
         </div>
         
@@ -140,7 +148,7 @@ const ReportIssue: React.FC = () => {
         
         <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-md p-4">
           <p className="text-sm text-muted-foreground mb-4">
-            선택한 항목: <strong>{selectedIssues.length}</strong>
+            Selected issues: <strong>{selectedIssues.length}</strong>
           </p>
           
           <div className="flex gap-4">
@@ -149,7 +157,7 @@ const ReportIssue: React.FC = () => {
               disabled={isSubmitting || selectedIssues.length === 0}
               className="w-full"
             >
-              {isSubmitting ? "제출 중..." : "문제 보고하기"}
+              {isSubmitting ? "Processing..." : "Continue to Details"}
             </Button>
             
             <Button
@@ -157,13 +165,13 @@ const ReportIssue: React.FC = () => {
               onClick={() => navigate('/chat')}
               className="w-full"
             >
-              AI 상담사와 채팅하기
+              Chat with AI Assistant
             </Button>
           </div>
           
           <p className="text-xs text-muted-foreground mt-4">
-            ℹ️ 이 보고서는 법적 조언이 아니며, 귀하의 상황을 더 잘 이해하기 위한 첫 단계입니다.
-            더 자세한 대화는 채팅 또는 전화 상담으로 진행됩니다.
+            ℹ️ This report is not legal advice, but the first step in understanding your situation.
+            Further conversation will be conducted via chat or phone consultation.
           </p>
         </div>
       </main>
