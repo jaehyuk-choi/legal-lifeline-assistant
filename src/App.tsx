@@ -21,9 +21,11 @@ import TermsOfService from "./pages/TermsOfService";
 import HowToUse from "./pages/HowToUse";
 import NotFound from "./pages/NotFound";
 
+// Create a query client for React Query
 const queryClient = new QueryClient();
 
-// ScrollToTop component to ensure page scrolls to top on route change
+// This component fixes the annoying scroll position issue when changing routes
+// Without this, the new page would maintain the scroll position from the previous page
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -34,6 +36,7 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Set up all the routes in the application
 const AppRoutes = () => (
   <>
     <ScrollToTop />
@@ -50,12 +53,13 @@ const AppRoutes = () => (
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/how-to-use" element={<HowToUse />} />
-      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      {/* Any new routes should go above this line */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   </>
 );
 
+// Main app component with all the providers wrapped around it
 const App = () => (
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>

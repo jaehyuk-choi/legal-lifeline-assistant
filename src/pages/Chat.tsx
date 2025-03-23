@@ -12,7 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
 
-// Define message type
+// Custom message type for our chat
 type Message = {
   id: string;
   role: 'user' | 'assistant';
@@ -31,7 +31,7 @@ const Chat = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // Welcome message
+    // Set initial welcome message when chat loads
     const welcomeMessage: Message = {
       id: 'welcome',
       role: 'assistant',
@@ -41,10 +41,10 @@ const Chat = () => {
     
     setMessages([welcomeMessage]);
     
-    // Check if we have a summary from a call
+    // Check if we came from the call page with a summary
     const summaryFromState = location.state?.summary;
     if (summaryFromState) {
-      // Add a message based on the call summary
+      // Add the call summary as a message from the assistant
       const summaryMessage: Message = {
         id: 'summary',
         role: 'assistant',
@@ -53,7 +53,7 @@ const Chat = () => {
       };
       setMessages(prev => [...prev, summaryMessage]);
     } else {
-      // Check sessionStorage as fallback
+      // Try sessionStorage as a fallback method
       const storedSummary = sessionStorage.getItem('callSummary');
       if (storedSummary) {
         const summaryMessage: Message = {
@@ -63,13 +63,13 @@ const Chat = () => {
           timestamp: new Date(),
         };
         setMessages(prev => [...prev, summaryMessage]);
-        // Clear the session storage to avoid showing this again
+        // Clean up after using the summary
         sessionStorage.removeItem('callSummary');
       }
     }
   }, [location]);
   
-  // Scroll to bottom when messages change
+  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -77,6 +77,7 @@ const Chat = () => {
   const handleSendMessage = async () => {
     if (!message.trim()) return;
     
+    // Add user message to the chat
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
@@ -89,19 +90,19 @@ const Chat = () => {
     setIsLoading(true);
 
     try {
-      // Convert to the format expected by our API
+      // Format the conversation history for the API
       const conversationHistory = messages.map(msg => ({
         role: msg.role,
         content: msg.content
       }));
       
-      // Add the new user message
+      // Add the new message to history
       conversationHistory.push({
         role: 'user',
         content: message
       });
 
-      // Call our Edge Function
+      // Call our Supabase Edge Function for LLM response
       const { data, error } = await supabase.functions.invoke('chat-llm', {
         body: {
           message,
@@ -111,7 +112,7 @@ const Chat = () => {
 
       if (error) throw error;
 
-      // Add assistant's response
+      // Add the AI's response to chat
       const assistantMessage: Message = {
         id: Date.now().toString(),
         role: 'assistant',
@@ -132,6 +133,7 @@ const Chat = () => {
     }
   };
 
+  // Handle Enter key to send message (but allow Shift+Enter for new line)
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -146,13 +148,13 @@ const Chat = () => {
       
       <main className="flex-1 flex flex-col max-w-3xl w-full mx-auto p-4">
         <div className="flex-1 flex flex-col bg-white/80 backdrop-blur-sm rounded-lg shadow-md overflow-hidden">
-          {/* Chat header */}
+          {/* Chat header section */}
           <div className="bg-primary px-4 py-3 text-white">
             <h1 className="text-lg font-medium">Legal Assistant Chat</h1>
             <p className="text-xs opacity-75">Ask any questions about your workplace concerns</p>
           </div>
           
-          {/* Chat messages */}
+          {/* Messages container */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((msg) => (
               <ChatMessage key={msg.id} message={msg} />
@@ -167,7 +169,7 @@ const Chat = () => {
             )}
           </div>
           
-          {/* Message input */}
+          {/* Message input area */}
           <div className="border-t border-gray-200 p-4">
             <div className="flex gap-2">
               <Textarea
