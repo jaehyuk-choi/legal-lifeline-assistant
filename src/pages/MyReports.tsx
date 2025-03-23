@@ -3,14 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/context/AuthContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { supabase } from '@/lib/supabase';
 import Header from '@/components/Header';
 import BackgroundGradient from '@/components/BackgroundGradient';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { FileText, AlertCircle, Clock, CheckCircle, FileCheck, ArrowLeft, Loader2 } from 'lucide-react';
+import StatusBar from '@/components/StatusBar';
 
 interface Report {
   id: string;
@@ -44,15 +45,9 @@ const statusLabels = {
   'decision_made': 'Decision Made',
 };
 
-const progressValues = {
-  'submitted': 25,
-  'in_progress': 50,
-  'reviewed': 75,
-  'decision_made': 100,
-};
-
 const MyReports: React.FC = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [reports, setReports] = useState<Report[]>([]);
@@ -130,10 +125,10 @@ const MyReports: React.FC = () => {
               >
                 <ArrowLeft className="h-4 w-4" />
               </Button>
-              <h1 className="text-2xl font-bold">My Reports</h1>
+              <h1 className="text-2xl font-bold">{t('myReports.title')}</h1>
             </div>
             <p className="text-muted-foreground mt-2">
-              Track the status of all your submitted workplace issue reports
+              {t('myReports.subtitle')}
             </p>
           </div>
           
@@ -163,7 +158,7 @@ const MyReports: React.FC = () => {
                       >
                         <span className="flex items-center gap-1">
                           {statusIcons[report.status as keyof typeof statusIcons]}
-                          {statusLabels[report.status as keyof typeof statusLabels]}
+                          {t(`status.${report.status}`)}
                         </span>
                       </Badge>
                       <span className="text-sm text-muted-foreground">
@@ -184,13 +179,8 @@ const MyReports: React.FC = () => {
                   
                   <CardContent>
                     <div className="space-y-4">
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Status: {statusLabels[report.status as keyof typeof statusLabels]}</span>
-                          <span>{progressValues[report.status as keyof typeof progressValues]}%</span>
-                        </div>
-                        <Progress value={progressValues[report.status as keyof typeof progressValues]} className="h-2" />
-                      </div>
+                      {/* Replace the old progress bar with our new StatusBar component */}
+                      <StatusBar currentStatus={report.status as 'submitted' | 'in_progress' | 'reviewed' | 'decision_made'} />
                       
                       {report.violation_probability !== null && (
                         <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">

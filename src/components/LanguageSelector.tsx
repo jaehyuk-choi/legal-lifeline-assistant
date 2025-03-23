@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Check, ChevronDown, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { useLanguage, type LanguageCode } from '@/context/LanguageContext';
 
 const languages = [
   { code: 'en', name: 'English' },
@@ -23,7 +24,13 @@ interface LanguageSelectorProps {
 }
 
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+  const { language, setLanguage } = useLanguage();
+  
+  const selectedLanguage = languages.find(lang => lang.code === language) || languages[0];
+
+  const handleSelectLanguage = (code: LanguageCode) => {
+    setLanguage(code);
+  };
 
   return (
     <DropdownMenu>
@@ -39,14 +46,14 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
-        {languages.map((language) => (
+        {languages.map((lang) => (
           <DropdownMenuItem
-            key={language.code}
-            onClick={() => setSelectedLanguage(language)}
+            key={lang.code}
+            onClick={() => handleSelectLanguage(lang.code as LanguageCode)}
             className="flex items-center justify-between"
           >
-            <span>{language.name}</span>
-            {selectedLanguage.code === language.code && (
+            <span>{lang.name}</span>
+            {lang.code === language && (
               <Check className="h-4 w-4" />
             )}
           </DropdownMenuItem>

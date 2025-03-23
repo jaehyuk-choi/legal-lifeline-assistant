@@ -4,6 +4,7 @@ import { Phone, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface CallToActionProps {
   className?: string;
@@ -12,6 +13,7 @@ interface CallToActionProps {
 const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleInitiateCall = async () => {
     setIsLoading(true);
@@ -57,7 +59,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
             ) : (
               <Phone className="mr-2 h-4 w-4" />
             )}
-            <span>Initiate a Test Call</span>
+            <span>{t('button.startCall')}</span>
           </Button>
         </div>
       </div>

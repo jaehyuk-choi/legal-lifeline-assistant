@@ -4,6 +4,7 @@ import { ArrowRight, Phone, MessageCircle, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface HeroProps {
   onInitiateCall: () => void;
@@ -11,6 +12,8 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
+  const { t } = useLanguage();
+  
   return (
     <section className={cn("pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden", className)}>
       <div className="container mx-auto container-padding">
@@ -20,26 +23,25 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-down">
-            Legal Assistance By Voice,{" "}
-            <span className="text-primary">Accessible To All</span>
+            {t('hero.title')}
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-up">
-            A free voice-based legal assistant that helps workers understand their rights and take action against workplace violations.
+            {t('hero.subtitle')}
           </p>
           
           <div className="flex flex-col items-center justify-center gap-6 animate-fade-up">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
               <Button size="lg" onClick={onInitiateCall} className="group w-full">
                 <Phone className="mr-2 h-4 w-4" />
-                <span>Start a Call</span>
+                <span>{t('button.startCall')}</span>
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               
               <Button size="lg" className="group w-full" asChild>
                 <Link to="/chat">
                   <MessageCircle className="mr-2 h-4 w-4" />
-                  <span>Chat Now</span>
+                  <span>{t('button.chatNow')}</span>
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
@@ -47,18 +49,18 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
               <Button size="lg" className="group w-full" asChild>
                 <Link to="/report-issue">
                   <FileText className="mr-2 h-4 w-4" />
-                  <span>Report Issue</span>
+                  <span>{t('button.reportIssue')}</span>
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
             </div>
             
             <div className="text-center text-sm text-muted-foreground">
-              <p>Choose how you want to connect with us - all services are free and confidential</p>
+              <p>{t('cta.choose')}</p>
             </div>
             
             <Button size="lg" variant="outline" asChild className="mt-4">
-              <a href="#how-it-works">Learn How It Works</a>
+              <a href="#how-it-works">{t('button.learnHow')}</a>
             </Button>
           </div>
         </div>
