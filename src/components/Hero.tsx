@@ -35,7 +35,7 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
               <Button 
                 size="lg" 
                 onClick={onInitiateCall} 
-                className="group w-full bg-[#6a994e] hover:bg-[#5a8c3e]"
+                className="w-full bg-[#6a994e] hover:bg-[#5a8c3e] group flex items-center justify-center"
               >
                 <Phone className="mr-2 h-4 w-4" />
                 <span>{t('button.startCall')}</span>
@@ -44,8 +44,8 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
               
               <Button 
                 size="lg" 
-                className="group w-full bg-[#6a994e] hover:bg-[#5a8c3e]"
                 asChild
+                className="w-full bg-[#6a994e] hover:bg-[#5a8c3e] group flex items-center justify-center"
               >
                 <Link to="/chat">
                   <MessageCircle className="mr-2 h-4 w-4" />
@@ -56,8 +56,8 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
               
               <Button 
                 size="lg" 
-                className="group w-full bg-[#6a994e] hover:bg-[#5a8c3e]"
                 asChild
+                className="w-full bg-[#6a994e] hover:bg-[#5a8c3e] group flex items-center justify-center"
               >
                 <Link to="/report-issue">
                   <FileText className="mr-2 h-4 w-4" />

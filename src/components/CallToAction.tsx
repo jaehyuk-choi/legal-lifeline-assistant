@@ -33,14 +33,14 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
       }
       
       toast({
-        title: "Call initiated",
-        description: "You will receive a call shortly to the registered number.",
+        title: t('toast.callInitiated'),
+        description: t('toast.callDescription'),
       });
     } catch (error) {
       console.error('Error initiating call:', error);
       toast({
-        title: "Error",
-        description: "There was a problem initiating your call. Please try again.",
+        title: t('toast.error'),
+        description: t('toast.callError'),
         variant: "destructive",
       });
     } finally {
@@ -63,7 +63,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
             variant="default" 
             onClick={handleInitiateCall}
             disabled={isLoading}
-            className="bg-[#6a994e] hover:bg-[#5a8c3e]"
+            className="bg-[#6a994e] hover:bg-[#5a8c3e] flex items-center justify-center"
           >
             {isLoading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

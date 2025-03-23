@@ -27,7 +27,7 @@ const AuthHeader: React.FC = () => {
             <>
               <LanguageSelector className="mr-2" />
               <Button variant="outline" asChild className="rounded-full">
-                <Link to="/chat">
+                <Link to="/chat" className="flex items-center">
                   <MessageCircle className="mr-2 h-4 w-4" />
                   <span className="hidden sm:inline">{t('button.chatNow')}</span>
                 </Link>

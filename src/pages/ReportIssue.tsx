@@ -13,8 +13,8 @@ import { useLanguage } from '@/context/LanguageContext';
 
 interface IssueOption {
   id: string;
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
 }
 
 const ReportIssue: React.FC = () => {
@@ -29,48 +29,48 @@ const ReportIssue: React.FC = () => {
   const issues: IssueOption[] = [
     {
       id: 'wage-theft',
-      title: 'Wage Theft',
-      description: 'Not being paid for hours worked or overtime, or being paid less than minimum wage.'
+      titleKey: 'issues.wageTheft.title',
+      descriptionKey: 'issues.wageTheft.description'
     },
     {
       id: 'unsafe-conditions',
-      title: 'Unsafe Working Conditions',
-      description: 'Working environment that is dangerous or harmful to health.'
+      titleKey: 'issues.unsafeConditions.title',
+      descriptionKey: 'issues.unsafeConditions.description'
     },
     {
       id: 'discrimination',
-      title: 'Discrimination or Harassment',
-      description: 'Being treated unfairly or harassed due to race, gender, nationality, etc.'
+      titleKey: 'issues.discrimination.title',
+      descriptionKey: 'issues.discrimination.description'
     },
     {
       id: 'wrongful-termination',
-      title: 'Wrongful Termination',
-      description: 'Being fired without proper cause or due process.'
+      titleKey: 'issues.wrongfulTermination.title',
+      descriptionKey: 'issues.wrongfulTermination.description'
     },
     {
       id: 'hour-violation',
-      title: 'Hour Violations',
-      description: 'Being forced to work more than legally allowed hours or not given breaks.'
+      titleKey: 'issues.hourViolations.title',
+      descriptionKey: 'issues.hourViolations.description'
     },
     {
       id: 'retaliation',
-      title: 'Retaliation',
-      description: 'Facing negative consequences after reporting issues or exercising your rights.'
+      titleKey: 'issues.retaliation.title',
+      descriptionKey: 'issues.retaliation.description'
     },
     {
       id: 'benefits-denial',
-      title: 'Benefits Denial',
-      description: 'Being unfairly denied benefits you are entitled to, such as healthcare or paid leave.'
+      titleKey: 'issues.benefitsDenial.title',
+      descriptionKey: 'issues.benefitsDenial.description'
     },
     {
       id: 'immigration-threat',
-      title: 'Immigration Status Threats',
-      description: 'Employer threatening to report immigration status as leverage or retaliation.'
+      titleKey: 'issues.immigrationThreats.title',
+      descriptionKey: 'issues.immigrationThreats.description'
     },
     {
       id: 'other',
-      title: 'Other Issues',
-      description: 'Any other workplace violations not listed above.'
+      titleKey: 'issues.other.title',
+      descriptionKey: 'issues.other.description'
     }
   ];
 
@@ -85,8 +85,8 @@ const ReportIssue: React.FC = () => {
   const handleSubmit = async () => {
     if (selectedIssues.length === 0) {
       toast({
-        title: "No issues selected",
-        description: "Please select at least one issue to proceed.",
+        title: t('reportIssue.noIssuesError'),
+        description: t('reportIssue.selectAtLeastOne'),
         variant: "destructive"
       });
       return;
@@ -107,8 +107,8 @@ const ReportIssue: React.FC = () => {
       });
     } catch (error) {
       toast({
-        title: "Submission Failed",
-        description: "There was an error submitting your report. Please try again.",
+        title: t('reportIssue.submissionFailed'),
+        description: t('reportIssue.errorTryAgain'),
         variant: "destructive"
       });
       setIsSubmitting(false);
@@ -156,11 +156,11 @@ const ReportIssue: React.FC = () => {
                     onCheckedChange={() => handleIssueToggle(issue.id)}
                     id={`checkbox-${issue.id}`}
                   />
-                  <CardTitle className="text-lg">{issue.title}</CardTitle>
+                  <CardTitle className="text-lg">{t(issue.titleKey)}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription>{issue.description}</CardDescription>
+                <CardDescription>{t(issue.descriptionKey)}</CardDescription>
               </CardContent>
             </Card>
           ))}
@@ -193,7 +193,7 @@ const ReportIssue: React.FC = () => {
               disabled={isSubmitting || selectedIssues.length === 0}
               className="w-full bg-[#6a994e] hover:bg-[#5a8c3e]"
             >
-              {isSubmitting ? "Processing..." : t('reportIssue.continueToDetails')}
+              {isSubmitting ? t('reportIssue.processing') : t('reportIssue.continueToDetails')}
             </Button>
             
             <Button
