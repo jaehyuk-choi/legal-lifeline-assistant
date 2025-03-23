@@ -12,7 +12,7 @@ import BackgroundGradient from '@/components/BackgroundGradient';
 import { useAuth } from '@/context/AuthContext';
 import Header from '@/components/Header';
 
-// My validation schema with password matching check
+// Form schema for validation
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -39,7 +39,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { signUp, user } = useAuth();
 
-  // Redirect if already logged in - don't need to sign up if you're already in!
+  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       navigate('/');
@@ -64,7 +64,7 @@ const SignUp = () => {
       await signUp(values.email, values.password, values.name);
       navigate("/sign-in");
     } catch (error) {
-      console.error("Sign up failed:", error);
+      console.error("Sign up error:", error);
     } finally {
       setIsLoading(false);
     }

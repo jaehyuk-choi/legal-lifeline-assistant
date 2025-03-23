@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
@@ -70,10 +71,10 @@ const MyReports: React.FC = () => {
 
         setReports(data || []);
       } catch (error: any) {
-        console.error('Report fetching failed:', error);
+        console.error('Error fetching reports:', error);
         toast({
           title: 'Error',
-          description: 'Couldn\'t get your reports. Try again?',
+          description: 'Failed to fetch your reports. Please try again.',
           variant: 'destructive',
         });
       } finally {
@@ -178,6 +179,7 @@ const MyReports: React.FC = () => {
                   
                   <CardContent>
                     <div className="space-y-4">
+                      {/* Replace the old progress bar with our new StatusBar component */}
                       <StatusBar currentStatus={report.status as 'submitted' | 'in_progress' | 'reviewed' | 'decision_made'} />
                       
                       {report.violation_probability !== null && (
@@ -196,7 +198,7 @@ const MyReports: React.FC = () => {
                   <CardFooter className="flex justify-end gap-3 pt-0">
                     <Button 
                       variant="outline" 
-                      onClick={() => navigate(`/chat`)}
+                      onClick={() => navigate(`/chat`)} // In production, this could pass context to the chat
                     >
                       Discuss This Case
                     </Button>

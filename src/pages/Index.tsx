@@ -19,31 +19,31 @@ const Index = () => {
     setIsLoading(true);
     
     try {
-      // Gotta call my Flask backend here
+      // Make API call to your Flask backend
       const response = await fetch('http://localhost:5000/initiate_call', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          // Just sending the timestamp for now, might need more data later
+          // Add any data you need to send to your Flask backend
           timestamp: new Date().toISOString(),
         }),
       });
       
       if (!response.ok) {
-        throw new Error('Call initiation failed');
+        throw new Error('Failed to initiate call');
       }
       
       toast({
         title: "Call initiated",
-        description: "You'll get a call shortly on your number.",
+        description: "You will receive a call shortly to the registered number.",
       });
     } catch (error) {
-      console.error('Darn, call initiation failed:', error);
+      console.error('Error initiating call:', error);
       toast({
         title: "Error",
-        description: "Something went wrong with your call. Try again?",
+        description: "There was a problem initiating your call. Please try again.",
         variant: "destructive",
       });
     } finally {

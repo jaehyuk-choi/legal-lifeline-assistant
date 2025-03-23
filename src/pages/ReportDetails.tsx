@@ -89,7 +89,7 @@ const placeholderTranslations = {
     es: "Describa brevemente la evidencia que está proporcionando...",
     fr: "Décrivez brièvement les preuves que vous fournissez...",
     zh: "简要描述您提供的证据...",
-    ko: "제공하는 증거에 대해 간략하게 설명해 주세��...",
+    ko: "제공하는 증거에 대해 간략하게 설명해 주세요...",
     hi: "आप जो सबूत प्रदान कर रहे हैं उसका संक्षेप में वर्णन करें..."
   }
 };
@@ -153,13 +153,13 @@ const ReportDetails: React.FC = () => {
       
       toast({
         title: "Progress saved",
-        description: "Your report info is safely saved.",
+        description: "Your report information has been saved.",
       });
     } catch (error) {
-      console.error('Form saving failed:', error);
+      console.error('Error saving form:', error);
       toast({
         title: "Save failed",
-        description: "Couldn't save your progress. Try again?",
+        description: "There was an error saving your progress.",
         variant: "destructive"
       });
     } finally {
@@ -242,15 +242,15 @@ const ReportDetails: React.FC = () => {
       } else {
         toast({
           title: "Report Submitted Successfully",
-          description: "We've got your report and will look at it soon.",
+          description: "We've received your report and will review it shortly.",
         });
         navigate('/report-confirmation');
       }
     } catch (error: any) {
-      console.error('Report submission failed:', error);
+      console.error('Error submitting report:', error);
       toast({
         title: "Submission Failed",
-        description: error.message || "Couldn't submit your report. Try again?",
+        description: error.message || "There was an error submitting your report. Please try again.",
         variant: "destructive"
       });
     } finally {

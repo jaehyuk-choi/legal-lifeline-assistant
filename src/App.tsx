@@ -21,11 +21,9 @@ import TermsOfService from "./pages/TermsOfService";
 import HowToUse from "./pages/HowToUse";
 import NotFound from "./pages/NotFound";
 
-// Had to create a query client for React Query - makes data fetching so much easier!
 const queryClient = new QueryClient();
 
-// This fixes that annoying scroll issue when changing pages
-// Hate when a new page opens and you're halfway down the scroll position!
+// ScrollToTop component to ensure page scrolls to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -36,7 +34,6 @@ const ScrollToTop = () => {
   return null;
 };
 
-// All my app routes - added them all here so they're easy to find
 const AppRoutes = () => (
   <>
     <ScrollToTop />
@@ -53,14 +50,12 @@ const AppRoutes = () => (
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/how-to-use" element={<HowToUse />} />
-      {/* TODO: Add more routes above this line if needed */}
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   </>
 );
 
-// Main app with all those fancy providers wrapped around everything
-// Quite a few providers but each one has its purpose!
 const App = () => (
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
