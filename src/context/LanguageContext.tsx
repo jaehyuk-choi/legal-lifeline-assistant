@@ -158,13 +158,6 @@ const translations: Translations = {
     zh: '问题',
     ko: '문제',
   },
-  'reportDetails.saveProgress': {
-    en: 'Save Progress',
-    es: 'Guardar Progreso',
-    fr: 'Sauvegarder la Progression',
-    zh: '保存进度',
-    ko: '진행 상황 저장',
-  },
   'reportDetails.when': {
     en: 'When did this happen?',
     es: '¿Cuándo sucedió esto?',
@@ -298,13 +291,7 @@ const translations: Translations = {
     zh: '取消',
     ko: '취소',
   },
-  'reportDetails.saveProgress': {
-    en: 'Save Progress',
-    es: 'Guardar Progreso',
-    fr: 'Sauvegarder la Progression',
-    zh: '保存进度',
-    ko: '진행 상황 저장',
-  },
+  // Removed duplicate 'reportDetails.saveProgress'
   'reportDetails.leaveWithoutSaving': {
     en: 'Leave Without Saving',
     es: 'Salir Sin Guardar',
@@ -452,6 +439,14 @@ const translations: Translations = {
     ko: '저희 서비스는 무료이며, 기밀이고, 여러 언어로 제공됩니다.',
   },
   // Add more translations as needed
+  // Added missing translation for saveProgress
+  'reportDetails.saveProgress': {
+    en: 'Save Progress',
+    es: 'Guardar Progreso',
+    fr: 'Sauvegarder la Progression',
+    zh: '保存进度',
+    ko: '진행 상황 저장',
+  },
 };
 
 interface LanguageContextType {
