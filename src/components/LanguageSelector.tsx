@@ -15,8 +15,8 @@ const languages = [
   { code: 'en', name: 'English' },
   { code: 'es', name: 'Español' },
   { code: 'fr', name: 'Français' },
-  { code: 'zh', name: 'Chinese' },
-  { code: 'ko', name: 'Korean' },
+  { code: 'zh', name: '中文' },
+  { code: 'ko', name: '한국어' },
 ];
 
 interface LanguageSelectorProps {
@@ -36,9 +36,9 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button 
-          variant="ghost" 
+          variant="outline" 
           size="sm" 
-          className={cn("flex items-center gap-1 text-sm font-medium", className)}
+          className={cn("flex items-center gap-1 text-sm font-medium bg-accent/50 border-accent-foreground/20 hover:bg-accent", className)}
         >
           <Globe className="h-4 w-4" />
           <span>{selectedLanguage.name}</span>
@@ -54,7 +54,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className }) => {
           >
             <span>{lang.name}</span>
             {lang.code === language && (
-              <Check className="h-4 w-4" />
+              <Check className="h-4 w-4 text-primary" />
             )}
           </DropdownMenuItem>
         ))}

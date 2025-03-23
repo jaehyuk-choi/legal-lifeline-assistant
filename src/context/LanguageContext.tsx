@@ -63,6 +63,34 @@ const translations: Translations = {
     zh: '了解工作原理',
     ko: '작동 방식 알아보기',
   },
+  'button.signIn': {
+    en: 'Sign In',
+    es: 'Iniciar Sesión',
+    fr: 'Se Connecter',
+    zh: '登录',
+    ko: '로그인',
+  },
+  'button.signUp': {
+    en: 'Sign Up',
+    es: 'Registrarse',
+    fr: 'S\'inscrire',
+    zh: '注册',
+    ko: '회원가입',
+  },
+  'button.signOut': {
+    en: 'Sign Out',
+    es: 'Cerrar Sesión',
+    fr: 'Se Déconnecter',
+    zh: '登出',
+    ko: '로그아웃',
+  },
+  'nav.home': {
+    en: 'Home',
+    es: 'Inicio',
+    fr: 'Accueil',
+    zh: '首页',
+    ko: '홈',
+  },
   // How It Works section
   'howItWorks.title': {
     en: 'How It Works',
@@ -176,6 +204,21 @@ const translations: Translations = {
     fr: 'Décision Prise',
     zh: '已做决定',
     ko: '결정됨',
+  },
+  // CTA section
+  'cta.ready': {
+    en: 'Ready to Try the Legal Assistant?',
+    es: '¿Listo para probar el Asistente Legal?',
+    fr: 'Prêt à essayer l\'Assistant Juridique?',
+    zh: '准备好尝试法律助手了吗？',
+    ko: '법률 도우미를 사용해 보시겠습니까?',
+  },
+  'cta.free': {
+    en: 'Our service is free, confidential, and available in multiple languages.',
+    es: 'Nuestro servicio es gratuito, confidencial y está disponible en varios idiomas.',
+    fr: 'Notre service est gratuit, confidentiel et disponible en plusieurs langues.',
+    zh: '我们的服务是免费的、保密的，并且提供多种语言。',
+    ko: '저희 서비스는 무료이며, 기밀이고, 여러 언어로 제공됩니다.',
   },
   // Add more translations as needed
 };

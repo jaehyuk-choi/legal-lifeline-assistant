@@ -5,10 +5,12 @@ import { Button } from '@/components/ui/button';
 import LanguageSelector from './LanguageSelector';
 import { MessageCircle, LogOut, User, FileText, List } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 const Header: React.FC = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleSignOut = async () => {
     await signOut();
@@ -19,7 +21,11 @@ const Header: React.FC = () => {
     <header className="w-full py-4 px-6 md:px-8 bg-transparent z-10">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          <span className="font-bold text-lg md:text-xl">FairVio</span>
+          <img 
+            src="/lovable-uploads/c6a34fee-9665-4be4-a15a-8b8e1aca99c0.png" 
+            alt="FairVio Logo" 
+            className="h-12 mr-2" 
+          />
         </Link>
         
         <div className="flex items-center gap-4">
@@ -29,14 +35,14 @@ const Header: React.FC = () => {
             <Button variant="outline" asChild className="rounded-full">
               <Link to="/chat">
                 <MessageCircle className="mr-2 h-4 w-4" />
-                <span>Chat</span>
+                <span>{t('button.chatNow')}</span>
               </Link>
             </Button>
             
             <Button variant="outline" asChild className="rounded-full">
               <Link to="/report-issue">
                 <FileText className="mr-2 h-4 w-4" />
-                <span>Report Issue</span>
+                <span>{t('button.reportIssue')}</span>
               </Link>
             </Button>
             
@@ -44,7 +50,7 @@ const Header: React.FC = () => {
               <Button variant="outline" asChild className="rounded-full">
                 <Link to="/my-reports">
                   <List className="mr-2 h-4 w-4" />
-                  <span>My Reports</span>
+                  <span>{t('myReports.title')}</span>
                 </Link>
               </Button>
             )}
@@ -56,16 +62,16 @@ const Header: React.FC = () => {
                 </span>
                 <Button variant="outline" onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />
-                  Sign Out
+                  {t('button.signOut')}
                 </Button>
               </>
             ) : (
               <>
                 <Button variant="outline" asChild>
-                  <Link to="/sign-in">Sign In</Link>
+                  <Link to="/sign-in">{t('button.signIn')}</Link>
                 </Button>
                 <Button asChild>
-                  <Link to="/sign-up">Sign Up</Link>
+                  <Link to="/sign-up">{t('button.signUp')}</Link>
                 </Button>
               </>
             )}

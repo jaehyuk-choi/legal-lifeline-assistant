@@ -49,21 +49,21 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
   };
 
   return (
-    <section className={cn("section-padding bg-primary text-primary-foreground", className)}>
+    <section className={cn("section-padding bg-gradient-to-br from-[#F2FCE2] to-[#FEF7CD] text-foreground", className)}>
       <div className="container mx-auto container-padding">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Try the Legal Assistant?
+            {t('cta.ready')}
           </h2>
           <p className="text-xl opacity-80 mb-8 max-w-2xl mx-auto">
-            Our service is free, confidential, and available in multiple languages.
+            {t('cta.free')}
           </p>
           <Button 
             size="lg" 
-            variant="secondary" 
+            variant="default" 
             onClick={handleInitiateCall}
             disabled={isLoading}
-            className="bg-white text-primary hover:bg-white/90"
+            className="bg-primary hover:bg-primary/90"
           >
             {isLoading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
