@@ -16,7 +16,7 @@ serve(async (req) => {
   try {
     // Hard-code Twilio credentials for direct testing
     const ACCOUNT_SID = "AC36915b9974948d6e8d75c71023b1d77c";
-    const AUTH_TOKEN = "8a6da27cc280081912b8e326e0c3ad40";
+    const AUTH_TOKEN = "362ec3c6563da1e944188d8848d7d831";
     const FROM_NUMBER = "+19207893459";
     
     // Get the phone number from the request or use default
@@ -29,7 +29,7 @@ serve(async (req) => {
     const auth = btoa(`${ACCOUNT_SID}:${AUTH_TOKEN}`);
     
     // Use the correct webhook URL
-    const webhookUrl = "https://92f6-38-113-160-139.ngrok-free.app/lang_select";
+    const webhookUrl = "http://localhost:5050/initiate_call";
 
     console.log(`Using webhook URL: ${webhookUrl}`);
 

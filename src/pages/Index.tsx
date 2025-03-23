@@ -9,6 +9,7 @@ import CallToAction from '@/components/CallToAction';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
 import BackgroundGradient from '@/components/BackgroundGradient';
+import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
   const { toast } = useToast();
@@ -19,26 +20,25 @@ const Index = () => {
     setIsLoading(true);
     
     try {
-      // Make API call to your Flask backend
-      const response = await fetch('http://localhost:5000/initiate_call', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          // Add any data you need to send to your Flask backend
+      // Call our Supabase edge function instead of Flask backend
+      const { data, error } = await supabase.functions.invoke('twilio-call', {
+        body: {
           timestamp: new Date().toISOString(),
-        }),
+        }
       });
       
-      if (!response.ok) {
-        throw new Error('Failed to initiate call');
+      if (error) {
+        console.error('Error initiating call:', error);
+        throw error;
       }
       
       toast({
         title: "Call initiated",
         description: "You will receive a call shortly to the registered number.",
       });
+      
+      // Navigate to call page
+      navigate('/call');
     } catch (error) {
       console.error('Error initiating call:', error);
       toast({

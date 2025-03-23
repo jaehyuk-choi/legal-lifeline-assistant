@@ -18,10 +18,12 @@ serve(async (req) => {
     const requestData = await req.json();
     console.log('Initiating call with data:', requestData);
 
-    // Forward to our twilio-call function
-    const twilioFunc = Deno.env.get('SUPABASE_URL') + '/functions/v1/twilio-call';
+    // Forward to our twilio-call function directly
+    const twilioFuncUrl = `${Deno.env.get('SUPABASE_URL') || 'https://xndvrjgheguqysltlheg.supabase.co'}/functions/v1/twilio-call`;
     
-    const response = await fetch(twilioFunc, {
+    console.log(`Forwarding request to: ${twilioFuncUrl}`);
+    
+    const response = await fetch(twilioFuncUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,13 +42,17 @@ serve(async (req) => {
     }
 
     const data = await response.json();
+    console.log('Call initiated successfully:', data);
     
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Error in initiate-call function:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ 
+      success: false, 
+      error: error.message 
+    }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
