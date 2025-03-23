@@ -245,9 +245,20 @@ const ReportDetails: React.FC = () => {
           title: "Report Submitted Successfully",
           description: "We've received your report and will review it shortly.",
         });
-        // 통화 요약 정보 삭제
-        sessionStorage.removeItem('callSummary');
-        navigate('/my-reports');
+        
+        // Calculate a mock severity score and generate recommendations
+        const severityScore = Math.random() * 100;
+        const mockReportId = reportData?.[0]?.id || 'unknown';
+        
+        // Navigate to report confirmation with analysis data
+        navigate('/report-confirmation', { 
+          state: { 
+            reportComplete: true,
+            severity: severityScore,
+            reportId: mockReportId,
+            issueType: currentIssue.title
+          } 
+        });
       }
     } catch (error: any) {
       console.error('Error submitting report:', error);
