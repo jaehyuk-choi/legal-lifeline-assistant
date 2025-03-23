@@ -31,18 +31,18 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
           </p>
           
           <div className="flex flex-col items-center justify-center gap-6 animate-fade-up">
-            <div className="text-center text-sm text-muted-foreground">
-              <p>{t('cta.choose')}</p>
-            </div>
-            
             <Button 
               size="lg" 
-              variant="outline" 
+              variant="green" 
               onClick={() => navigate('/how-to-use')}
-              className="mt-4"
+              className="w-full md:w-auto"
             >
               {t('button.learnHow')}
             </Button>
+            
+            <div className="text-center text-sm text-muted-foreground mt-4">
+              <p>{t('cta.choose')}</p>
+            </div>
           </div>
         </div>
       </div>
