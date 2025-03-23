@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
@@ -52,12 +51,55 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+const placeholderTranslations = {
+  when: {
+    en: "e.g., June 15, 2023, around 2 PM",
+    es: "ej., 15 de junio de 2023, alrededor de las 2 p.m.",
+    fr: "ex., 15 juin 2023, vers 14h",
+    zh: "例如，2023年6月15日，下午2点左右",
+    ko: "예: 2023년 6월 15일, 오후 2시경",
+    hi: "उदा., 15 जून, 2023, लगभग दोपहर 2 बजे"
+  },
+  where: {
+    en: "e.g., Company name, address, or specific location",
+    es: "ej., Nombre de la empresa, dirección o ubicación específica",
+    fr: "ex., Nom de l'entreprise, adresse ou emplacement spécifique",
+    zh: "例如，公司名称、地址或特定位置",
+    ko: "예: 회사 이름, 주소 또는 특정 위치",
+    hi: "उदा., कंपनी का नाम, पता, या विशिष्ट स्थान"
+  },
+  who: {
+    en: "e.g., Supervisor name, coworkers, or company representatives",
+    es: "ej., Nombre del supervisor, compañeros de trabajo o representantes de la empresa",
+    fr: "ex., Nom du superviseur, collègues ou représentants de l'entreprise",
+    zh: "例如，主管姓名、同事或公司代表",
+    ko: "예: 관리자 이름, 동료 또는 회사 대표",
+    hi: "उदा., पर्यवेक्षक का नाम, सहकर्मी, या कंपनी के प्रतिनिधि"
+  },
+  what: {
+    en: "Please describe in detail what happened...",
+    es: "Por favor describa en detalle lo que sucedió...",
+    fr: "Veuillez décrire en détail ce qui s'est passé...",
+    zh: "请详细描述发生了什么...",
+    ko: "발생한 일에 대해 자세히 설명해 주세요...",
+    hi: "कृपया विस्तार से बताएं कि क्या हुआ था..."
+  },
+  evidence: {
+    en: "Briefly describe the evidence you're providing...",
+    es: "Describa brevemente la evidencia que está proporcionando...",
+    fr: "Décrivez brièvement les preuves que vous fournissez...",
+    zh: "简要描述您提供的证据...",
+    ko: "제공하는 증거에 대해 간략하게 설명해 주세요...",
+    hi: "आप जो सबूत प्रदान कर रहे हैं उसका संक्षेप में वर्णन करें..."
+  }
+};
+
 const ReportDetails: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [activeIssueIndex, setActiveIssueIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -65,10 +107,8 @@ const ReportDetails: React.FC = () => {
   const [showExitAlert, setShowExitAlert] = useState(false);
   const [savedForms, setSavedForms] = useState<{ [key: string]: FormValues }>({});
 
-  // Get selected issues from navigation state
   const selectedIssues = location.state?.selectedIssues as IssueOption[] || [];
 
-  // Redirect if no issues were selected
   if (selectedIssues.length === 0) {
     navigate('/report-issue');
     return null;
@@ -151,13 +191,11 @@ const ReportDetails: React.FC = () => {
     try {
       const currentIssue = selectedIssues[activeIssueIndex];
       
-      // Save form data for this issue
       setSavedForms(prev => ({
         ...prev,
         [currentIssue.id]: values
       }));
       
-      // Save issue details to Supabase
       const { data: reportData, error: reportError } = await supabase
         .from('issue_reports')
         .insert({
@@ -176,7 +214,6 @@ const ReportDetails: React.FC = () => {
       
       if (reportError) throw reportError;
       
-      // Upload evidence files if any
       const files = selectedFiles[currentIssue.id] || [];
       if (files.length > 0 && reportData?.[0]?.id) {
         const reportId = reportData[0].id;
@@ -193,9 +230,7 @@ const ReportDetails: React.FC = () => {
         }
       }
 
-      // Check if this is the last issue to report
       if (activeIssueIndex < selectedIssues.length - 1) {
-        // Move to the next issue
         setActiveIssueIndex(activeIssueIndex + 1);
         form.reset({
           when: savedForms[selectedIssues[activeIssueIndex + 1]?.id]?.when || '',
@@ -205,7 +240,6 @@ const ReportDetails: React.FC = () => {
           evidenceDescription: savedForms[selectedIssues[activeIssueIndex + 1]?.id]?.evidenceDescription || ''
         });
       } else {
-        // All issues reported, navigate to confirmation page
         toast({
           title: "Report Submitted Successfully",
           description: "We've received your report and will review it shortly.",
@@ -279,7 +313,7 @@ const ReportDetails: React.FC = () => {
                         <FormControl>
                           <Input 
                             type="text" 
-                            placeholder="e.g., June 15, 2023, around 2 PM" 
+                            placeholder={placeholderTranslations.when[language]} 
                             {...field} 
                           />
                         </FormControl>
@@ -300,7 +334,7 @@ const ReportDetails: React.FC = () => {
                         <FormControl>
                           <Input 
                             type="text" 
-                            placeholder="e.g., Company name, address, or specific location" 
+                            placeholder={placeholderTranslations.where[language]} 
                             {...field} 
                           />
                         </FormControl>
@@ -321,7 +355,7 @@ const ReportDetails: React.FC = () => {
                         <FormControl>
                           <Input 
                             type="text" 
-                            placeholder="e.g., Supervisor name, coworkers, or company representatives" 
+                            placeholder={placeholderTranslations.who[language]} 
                             {...field} 
                           />
                         </FormControl>
@@ -341,7 +375,7 @@ const ReportDetails: React.FC = () => {
                         <FormLabel>{t('reportDetails.what')}</FormLabel>
                         <FormControl>
                           <Textarea 
-                            placeholder="Please describe in detail what happened..." 
+                            placeholder={placeholderTranslations.what[language]} 
                             className="min-h-[120px]"
                             {...field} 
                           />
@@ -397,7 +431,7 @@ const ReportDetails: React.FC = () => {
                           <FormLabel>{t('reportDetails.evidenceDescription')}</FormLabel>
                           <FormControl>
                             <Textarea 
-                              placeholder="Briefly describe the evidence you're providing..." 
+                              placeholder={placeholderTranslations.evidence[language]} 
                               className="min-h-[80px]"
                               {...field} 
                             />
@@ -423,7 +457,7 @@ const ReportDetails: React.FC = () => {
                       className="bg-[#6a994e] hover:bg-[#5a8c3e]"
                     >
                       {isSubmitting 
-                        ? "Submitting..." 
+                        ? t('reportDetails.processing') 
                         : activeIssueIndex < selectedIssues.length - 1 
                           ? t('reportDetails.nextIssue') 
                           : t('reportDetails.submit')
