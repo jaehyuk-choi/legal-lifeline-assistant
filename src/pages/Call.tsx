@@ -63,14 +63,14 @@ const Call = () => {
       }
       
       toast({
-        title: t('toast.callInitiated'),
-        description: t('toast.callDescription'),
+        title: "Call Initiated",
+        description: "You will be connected to a legal assistant shortly.",
       });
     } catch (error) {
       console.error('Error initiating call:', error);
       toast({
-        title: t('toast.error'),
-        description: t('toast.callError'),
+        title: "Error",
+        description: "Failed to initiate call. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -90,11 +90,13 @@ const Call = () => {
       // In a real application, this would call an edge function to get a real summary
       // For now we're just simulating a delay and returning a mock summary
       setTimeout(() => {
-        setCallSummary(
-          "Your call with our legal assistant has been summarized. The main topics discussed were workplace safety concerns and potential violations of labor regulations. We recommend documenting the issues you mentioned and considering filing a formal complaint with your local labor department."
-        );
+        const summary = "Your call with our legal assistant has been summarized. The main topics discussed were workplace safety concerns and potential violations of labor regulations. We recommend documenting the issues you mentioned and considering filing a formal complaint with your local labor department.";
+        setCallSummary(summary);
         setShowSummary(true);
         setIsLoading(false);
+        
+        // Store the summary in sessionStorage to ensure it's available for other pages
+        sessionStorage.setItem('callSummary', summary);
       }, 2000);
     } catch (error) {
       console.error('Error generating summary:', error);
@@ -114,13 +116,27 @@ const Call = () => {
   };
 
   const handleCreateReport = () => {
-    // Store call summary in sessionStorage to use in the report
-    sessionStorage.setItem('callSummary', callSummary);
-    navigate('/report-confirmation');
+    // Ensure the summary is stored in sessionStorage before navigating
+    if (callSummary) {
+      sessionStorage.setItem('callSummary', callSummary);
+      navigate('/report-confirmation', { state: { summary: callSummary } });
+    } else {
+      toast({
+        title: "Error",
+        description: "No call summary available. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleContinueChat = () => {
-    navigate('/chat');
+    // Pass the summary to the chat page
+    if (callSummary) {
+      sessionStorage.setItem('callSummary', callSummary);
+      navigate('/chat', { state: { summary: callSummary } });
+    } else {
+      navigate('/chat');
+    }
   };
 
   return (
