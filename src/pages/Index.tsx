@@ -4,7 +4,6 @@ import { useToast } from '@/components/ui/use-toast';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import HowItWorks from '@/components/HowItWorks';
-import DemoVideo from '@/components/DemoVideo';
 import CallToAction from '@/components/CallToAction';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
@@ -43,7 +42,6 @@ const Index = () => {
       <main>
         <Hero onInitiateCall={handleInitiateCall} />
         <HowItWorks />
-        <DemoVideo />
         <CallToAction />
         <FAQ />
       </main>
