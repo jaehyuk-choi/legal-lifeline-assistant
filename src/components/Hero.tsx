@@ -11,7 +11,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   return (
     <section className={cn("pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden", className)}>

@@ -15,14 +15,14 @@ interface CallToActionProps {
 const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const handleInitiateCall = async () => {
     setIsLoading(true);
     
     try {
-      // Call our edge function that connects to the Flask backend
-      const { data, error } = await supabase.functions.invoke('initiate-call', {
+      // Call our edge function that connects to Twilio
+      const { data, error } = await supabase.functions.invoke('twilio-call', {
         body: {
           source: 'call-to-action',
           timestamp: new Date().toISOString(),

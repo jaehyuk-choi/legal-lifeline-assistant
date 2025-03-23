@@ -7,9 +7,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Configure your Flask API endpoint here
-const FLASK_API_URL = Deno.env.get('FLASK_API_URL') || 'http://localhost:5000/initiate_call';
-
+// Call our Twilio function instead of Flask API
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -20,11 +18,14 @@ serve(async (req) => {
     const requestData = await req.json();
     console.log('Initiating call with data:', requestData);
 
-    // Forward the request to your Flask API
-    const response = await fetch(FLASK_API_URL, {
+    // Forward to our twilio-call function
+    const twilioFunc = Deno.env.get('SUPABASE_URL') + '/functions/v1/twilio-call';
+    
+    const response = await fetch(twilioFunc, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
       },
       body: JSON.stringify({
         ...requestData,
@@ -34,7 +35,7 @@ serve(async (req) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Error from Flask API:', errorText);
+      console.error('Error from Twilio function:', errorText);
       throw new Error(`Failed to initiate call: ${errorText}`);
     }
 
