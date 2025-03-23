@@ -32,13 +32,21 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
           
           <div className="flex flex-col items-center justify-center gap-6 animate-fade-up">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
-              <Button size="lg" onClick={onInitiateCall} className="group w-full">
+              <Button 
+                size="lg" 
+                onClick={onInitiateCall} 
+                className="group w-full bg-[#6a994e] hover:bg-[#5a8c3e]"
+              >
                 <Phone className="mr-2 h-4 w-4" />
                 <span>{t('button.startCall')}</span>
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               
-              <Button size="lg" className="group w-full" asChild>
+              <Button 
+                size="lg" 
+                className="group w-full bg-[#6a994e] hover:bg-[#5a8c3e]"
+                asChild
+              >
                 <Link to="/chat">
                   <MessageCircle className="mr-2 h-4 w-4" />
                   <span>{t('button.chatNow')}</span>
@@ -46,7 +54,11 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
                 </Link>
               </Button>
               
-              <Button size="lg" className="group w-full" asChild>
+              <Button 
+                size="lg" 
+                className="group w-full bg-[#6a994e] hover:bg-[#5a8c3e]"
+                asChild
+              >
                 <Link to="/report-issue">
                   <FileText className="mr-2 h-4 w-4" />
                   <span>{t('button.reportIssue')}</span>
@@ -59,14 +71,19 @@ const Hero: React.FC<HeroProps> = ({ onInitiateCall, className }) => {
               <p>{t('cta.choose')}</p>
             </div>
             
-            <Button size="lg" variant="outline" asChild className="mt-4">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              asChild 
+              className="mt-4"
+            >
               <a href="#how-it-works">{t('button.learnHow')}</a>
             </Button>
           </div>
         </div>
       </div>
       
-      <div className="absolute -bottom-48 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-accent rounded-full opacity-20" />
+      <div className="absolute -bottom-48 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#f0f7e3] rounded-full opacity-20" />
     </section>
   );
 };

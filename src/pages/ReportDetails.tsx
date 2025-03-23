@@ -11,7 +11,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Form,
   FormControl,
@@ -35,6 +34,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useLanguage } from '@/context/LanguageContext';
 
 interface IssueOption {
   id: string;
@@ -57,6 +57,7 @@ const ReportDetails: React.FC = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [activeIssueIndex, setActiveIssueIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -242,11 +243,11 @@ const ReportDetails: React.FC = () => {
               >
                 <ArrowLeft className="h-4 w-4" />
               </Button>
-              <h1 className="text-2xl font-bold">Report Details</h1>
+              <h1 className="text-2xl font-bold">{t('reportDetails.title')}</h1>
             </div>
             <p className="text-muted-foreground mt-2">
-              Please provide specific details about the incident(s) you experienced.
-              {selectedIssues.length > 1 && ` (Issue ${activeIssueIndex + 1} of ${selectedIssues.length})`}
+              {t('reportDetails.subtitle')}
+              {selectedIssues.length > 1 && ` (${t('reportDetails.issueOf')} ${activeIssueIndex + 1} ${t('of')} ${selectedIssues.length})`}
             </p>
           </div>
           
@@ -262,7 +263,7 @@ const ReportDetails: React.FC = () => {
                   className="flex items-center gap-1"
                 >
                   <Save className="h-4 w-4" />
-                  Save Progress
+                  {t('reportDetails.saveProgress')}
                 </Button>
               </div>
             </CardHeader>
@@ -274,7 +275,7 @@ const ReportDetails: React.FC = () => {
                     name="when"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>When did this happen?</FormLabel>
+                        <FormLabel>{t('reportDetails.when')}</FormLabel>
                         <FormControl>
                           <Input 
                             type="text" 
@@ -283,7 +284,7 @@ const ReportDetails: React.FC = () => {
                           />
                         </FormControl>
                         <FormDescription>
-                          Provide the date and approximate time of the incident
+                          {t('reportDetails.whenDescription')}
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -295,7 +296,7 @@ const ReportDetails: React.FC = () => {
                     name="where"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Where did this happen?</FormLabel>
+                        <FormLabel>{t('reportDetails.where')}</FormLabel>
                         <FormControl>
                           <Input 
                             type="text" 
@@ -304,7 +305,7 @@ const ReportDetails: React.FC = () => {
                           />
                         </FormControl>
                         <FormDescription>
-                          Provide the location where the incident occurred
+                          {t('reportDetails.whereDescription')}
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -316,7 +317,7 @@ const ReportDetails: React.FC = () => {
                     name="who"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Who was involved?</FormLabel>
+                        <FormLabel>{t('reportDetails.who')}</FormLabel>
                         <FormControl>
                           <Input 
                             type="text" 
@@ -325,7 +326,7 @@ const ReportDetails: React.FC = () => {
                           />
                         </FormControl>
                         <FormDescription>
-                          Provide names or positions of people involved
+                          {t('reportDetails.whoDescription')}
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -337,7 +338,7 @@ const ReportDetails: React.FC = () => {
                     name="what"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>What happened?</FormLabel>
+                        <FormLabel>{t('reportDetails.what')}</FormLabel>
                         <FormControl>
                           <Textarea 
                             placeholder="Please describe in detail what happened..." 
@@ -346,7 +347,7 @@ const ReportDetails: React.FC = () => {
                           />
                         </FormControl>
                         <FormDescription>
-                          Provide a detailed description of the incident
+                          {t('reportDetails.whatDescription')}
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -354,7 +355,7 @@ const ReportDetails: React.FC = () => {
                   />
                   
                   <div className="space-y-4">
-                    <Label>Evidence (Optional)</Label>
+                    <Label>{t('reportDetails.evidence')}</Label>
                     <div className="grid gap-2">
                       <Input
                         type="file"
@@ -363,13 +364,13 @@ const ReportDetails: React.FC = () => {
                         accept="image/*,.pdf,.doc,.docx,.txt"
                       />
                       <p className="text-xs text-muted-foreground">
-                        Upload photos, documents, or other evidence related to this incident
+                        {t('reportDetails.evidenceUpload')}
                       </p>
                     </div>
                     
                     {selectedFiles[currentIssue.id]?.length > 0 && (
                       <div className="mt-2">
-                        <p className="text-sm font-semibold mb-1">Selected Files:</p>
+                        <p className="text-sm font-semibold mb-1">{t('reportDetails.selectedFiles')}</p>
                         <ul className="text-sm space-y-1">
                           {selectedFiles[currentIssue.id]?.map((file, index) => (
                             <li key={index} className="flex items-center justify-between">
@@ -380,7 +381,7 @@ const ReportDetails: React.FC = () => {
                                 size="sm" 
                                 onClick={() => removeFile(currentIssue.id, index)}
                               >
-                                Remove
+                                {t('reportDetails.remove')}
                               </Button>
                             </li>
                           ))}
@@ -393,7 +394,7 @@ const ReportDetails: React.FC = () => {
                       name="evidenceDescription"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Evidence Description</FormLabel>
+                          <FormLabel>{t('reportDetails.evidenceDescription')}</FormLabel>
                           <FormControl>
                             <Textarea 
                               placeholder="Briefly describe the evidence you're providing..." 
@@ -413,18 +414,19 @@ const ReportDetails: React.FC = () => {
                       variant="outline"
                       onClick={handleBackClick}
                     >
-                      Back
+                      {t('reportDetails.back')}
                     </Button>
                     
                     <Button
                       type="submit"
                       disabled={isSubmitting}
+                      className="bg-[#6a994e] hover:bg-[#5a8c3e]"
                     >
                       {isSubmitting 
                         ? "Submitting..." 
                         : activeIssueIndex < selectedIssues.length - 1 
-                          ? "Save & Continue to Next Issue" 
-                          : "Submit Report"
+                          ? t('reportDetails.nextIssue') 
+                          : t('reportDetails.submit')
                       }
                     </Button>
                   </div>
@@ -438,15 +440,17 @@ const ReportDetails: React.FC = () => {
       <AlertDialog open={showExitAlert} onOpenChange={setShowExitAlert}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Unsaved Changes</AlertDialogTitle>
+            <AlertDialogTitle>{t('reportDetails.unsavedChanges')}</AlertDialogTitle>
             <AlertDialogDescription>
-              You have unsaved changes. Would you like to save your progress before leaving?
+              {t('reportDetails.wantToSave')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleSaveForm}>Save Progress</AlertDialogAction>
-            <AlertDialogAction onClick={() => navigate('/report-issue')}>Leave Without Saving</AlertDialogAction>
+            <AlertDialogCancel>{t('reportDetails.cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={handleSaveForm}>{t('reportDetails.saveProgress')}</AlertDialogAction>
+            <AlertDialogAction onClick={() => navigate('/report-issue')}>
+              {t('reportDetails.leaveWithoutSaving')}
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

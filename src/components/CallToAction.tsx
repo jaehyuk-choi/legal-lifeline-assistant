@@ -49,7 +49,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
   };
 
   return (
-    <section className={cn("section-padding bg-gradient-to-br from-[#F2FCE2] to-[#FEF7CD] text-foreground", className)}>
+    <section className={cn("section-padding bg-gradient-to-br from-[#f2fce2] to-[#fef7cd] text-foreground", className)}>
       <div className="container mx-auto container-padding">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -63,7 +63,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ className }) => {
             variant="default" 
             onClick={handleInitiateCall}
             disabled={isLoading}
-            className="bg-primary hover:bg-primary/90"
+            className="bg-[#6a994e] hover:bg-[#5a8c3e]"
           >
             {isLoading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAuth } from '@/context/AuthContext';
 import { ArrowLeft } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface IssueOption {
   id: string;
@@ -22,6 +23,7 @@ const ReportIssue: React.FC = () => {
   const navigate = useNavigate();
   const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { t } = useLanguage();
 
   const issues: IssueOption[] = [
     {
@@ -127,10 +129,10 @@ const ReportIssue: React.FC = () => {
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-2xl font-bold">Report a Workplace Issue</h1>
+            <h1 className="text-2xl font-bold">{t('reportIssue.title')}</h1>
           </div>
           <p className="text-muted-foreground mt-2">
-            Select the issues you've experienced at your workplace. In the next step, we'll ask for more details.
+            {t('reportIssue.subtitle')}
           </p>
         </div>
         
@@ -140,8 +142,8 @@ const ReportIssue: React.FC = () => {
               key={issue.id} 
               className={`cursor-pointer transition-all ${
                 selectedIssues.includes(issue.id) 
-                  ? 'border-primary ring-2 ring-primary ring-opacity-50' 
-                  : 'hover:border-primary/50'
+                  ? 'border-[#6a994e] ring-2 ring-[#6a994e] ring-opacity-50' 
+                  : 'hover:border-[#6a994e]/50'
               }`}
               onClick={() => handleIssueToggle(issue.id)}
             >
@@ -164,16 +166,16 @@ const ReportIssue: React.FC = () => {
         
         <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-md p-4">
           <p className="text-sm text-muted-foreground mb-4">
-            Selected issues: <strong>{selectedIssues.length}</strong>
+            {t('reportIssue.selectedIssues')}: <strong>{selectedIssues.length}</strong>
           </p>
           
           <div className="flex gap-4">
             <Button
               onClick={handleSubmit}
               disabled={isSubmitting || selectedIssues.length === 0}
-              className="w-full"
+              className="w-full bg-[#6a994e] hover:bg-[#5a8c3e]"
             >
-              {isSubmitting ? "Processing..." : "Continue to Details"}
+              {isSubmitting ? "Processing..." : t('reportIssue.continueToDetails')}
             </Button>
             
             <Button
@@ -181,13 +183,12 @@ const ReportIssue: React.FC = () => {
               onClick={() => navigate('/chat')}
               className="w-full"
             >
-              Chat with AI Assistant
+              {t('reportIssue.chatWithAI')}
             </Button>
           </div>
           
           <p className="text-xs text-muted-foreground mt-4">
-            ℹ️ This report is not legal advice, but the first step in understanding your situation.
-            Further conversation will be conducted via chat or phone consultation.
+            ℹ️ {t('reportIssue.note')}
           </p>
         </div>
       </main>

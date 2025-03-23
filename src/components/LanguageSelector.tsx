@@ -38,7 +38,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className }) => {
         <Button 
           variant="outline" 
           size="sm" 
-          className={cn("flex items-center gap-1 text-sm font-medium bg-accent/50 border-accent-foreground/20 hover:bg-accent", className)}
+          className={cn("flex items-center gap-1 text-sm font-medium bg-accent/50 border-[#6a994e]/20 hover:bg-[#f2fce2]/70", className)}
         >
           <Globe className="h-4 w-4" />
           <span>{selectedLanguage.name}</span>
@@ -54,7 +54,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className }) => {
           >
             <span>{lang.name}</span>
             {lang.code === language && (
-              <Check className="h-4 w-4 text-primary" />
+              <Check className="h-4 w-4 text-[#6a994e]" />
             )}
           </DropdownMenuItem>
         ))}

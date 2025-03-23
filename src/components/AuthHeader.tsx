@@ -15,9 +15,9 @@ const AuthHeader: React.FC = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
           <img 
-            src="/lovable-uploads/c6a34fee-9665-4be4-a15a-8b8e1aca99c0.png" 
+            src="/lovable-uploads/99788104-fd74-4915-a14c-f0e675de1499.png" 
             alt="FairVio Logo" 
-            className="h-12 mr-2" 
+            className="h-16 md:h-20 mr-2" 
           />
         </Link>
         
@@ -33,7 +33,7 @@ const AuthHeader: React.FC = () => {
               <Button variant="outline" asChild>
                 <Link to="/sign-in">{t('button.signIn')}</Link>
               </Button>
-              <Button asChild>
+              <Button asChild className="bg-[#6a994e] hover:bg-[#5a8c3e]">
                 <Link to="/sign-up">{t('button.signUp')}</Link>
               </Button>
             </>
